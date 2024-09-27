@@ -49,4 +49,22 @@ using `import *` is considered bad practice and if it used used `__init__.py` sh
 `__all__ = ["module_a", "module_b", "module_c"]`
 
 ## Relative and Absolute Imports
+
+assume the given file structure:
+```
+script.py
+module/
+	__init__.py
+	func_a.py
+	func_b.py
+```
+then `func_a.py` can use `func_b(n)` by impporting either wih a relative path :
+`from func_b import func_b`
+or importing with an absolute path :
+`from module.func_b import func_b`
+
+pyhon treats the current working directory as the root from which to interpret
+absolute paths
+
 ## Dealing with circular imports
+https://www.stefaanlippens.net/circular-imports-type-hints-python.html
