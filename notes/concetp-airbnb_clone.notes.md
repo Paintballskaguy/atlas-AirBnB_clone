@@ -1,0 +1,70 @@
+# AirBnB Clone
+
+## Video Resources
+- [AirBnB Overview](https://www.youtube.com/watch?v=QTwmCB_AWqI)
+- [2 - console](https://www.youtube.com/watch?v=jeJwRB33YNg)
+- [3 - ORM](https://www.youtube.com/watch?v=ZwCD8cNZk9U)
+- [4 - API](https://www.youtube.com/watch?v=LrQhULlFJdU)
+- [Final Product (video no longer available)]()
+
+## Final Product
+the completed product will be composed of
+- a command interpreter that manipulates data without a gui
+- a website fronend showcasing the final product 
+	- madeup of both static and dynamic components
+- either a database or files that store objects
+- an API providing a communication interface between the frontend and the backend for CRUD operations
+
+
+## Concepts
+- collaborative `unittest`
+- python packages
+- serialization/deserialization
+- `*args`, `**kwarg`
+- `datetime`
+
+## Building Blocks
+### the console
+- create data model
+- manage (CRUD) objects via concole (CLI)
+- store and persist objects with a JSON file
+
+### web static
+- create the HTML and CSS for the application
+- create a template for each object
+
+### MySQL storage
+- replace the `.json` file storage with an sql database
+- map models to a database table using an ORM
+
+### web framework - templating
+- create a python webserver
+- use objects stored in the database to make the HTML dynamic
+
+### RESTful API
+- expose objects stored in a json file via a web-interface
+- manipulate objects via the RESTful API
+
+### web dynamic
+- learn JQuery
+- load objects from the client-side by using your own RESTful API
+
+## Files and Directories
+- `models/` will contain all classes
+- `test/` will contain all `unittest`
+- `console.py` is the entry point to the CLI
+- `models/base_model.py` will be the base class for all models with common elements
+	- attributes: `id`, `created_at`, and `updated_at`
+	- methods: `save()` and `to_json()`
+- `models/engine/` will contain all storage classes using the same prototype
+	- `file_storage.py` will be stored here
+
+## Storage
+### How to store instances
+### File storage == JSON serialization
+
+## `*args`, `**kwargs`
+
+## `datetime`
+
+## Data Diagram
