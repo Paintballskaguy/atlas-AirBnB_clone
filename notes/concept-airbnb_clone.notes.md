@@ -14,7 +14,7 @@ the completed product will be composed of
 	- madeup of both static and dynamic components
 - either a database or files that store objects
 - an API providing a communication interface between the frontend and the backend for CRUD operations
-
+![components](../assets/components_diagram.png)
 
 ## Concepts
 - collaborative `unittest`
@@ -145,3 +145,4 @@ print(now.strftime("%A")) 	# Thursday
 
 
 ## Data Diagram
+![classes](../assets/class_relations.jpg)
