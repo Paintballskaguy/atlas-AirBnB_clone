@@ -14,16 +14,39 @@
 
 ## Background
 
-### Writing a Command Interpreter
+### First Steps
+- create parent class `BaseModel` that handles initialization, serialization and de-serialization
+- create simple serialization/de-serialization flow:
+	- Instance <--> Dictionary <--> `JSON` <--> string <--> file
+- create child classes: `User`, `State`, `City`, `Place`, etc
+- create an abstracted storage engine : File storage
+- create `unittest` to validate all classes and the storage engine
 
-### What is a Command Interpreter ?
+### Command Interpreter Functionality
+- create objects
+- retrieve objects
+- operate on objects
+- update object attributes
+- destroy objects
 
-## Objectives
+## Learning Goals
 
-## Requirements
-
-### Python Scripts
-
-### Python Unittest
+- how to create a python package
+- how to create a command interpreter using the `cmd` module
+- how to implement `unittest` on a large project
+- how to serialize and de-serialize a class
+- how to write and read a `json` file
+- how to manage `datetime`
+- what is an `uuid`
+- what are `*args` and `**kwargs` and how to use them
+- how to handle named arguments in a function
 
 ## Execution
+
+the console script should run in both interactive and non-interactive mode :
+`$ ./console.py`
+`$ echo <cmd> | ./console.py`
+
+test : `python3 -m unittest tests/test_models/test_base_model.py`
+test should also pass none-interactive mode :
+`$ echo "python3 -m unittest discover tests" | bash`
