@@ -29,6 +29,14 @@ the completed product will be composed of
 - manage (CRUD) objects via concole (CLI)
 - store and persist objects with a JSON file
 
+#### manipulating a storage system
+this storage system will provide an abstraction between objects and their storage.
+meaning that from the console code, the front-end, and the RESTful API attention will
+not be needed to how an object is stored. such implementation allows for the type of 
+storage system to be changed easily without having to update the entire codebase.
+
+the console will validate the storage engine
+
 ### web static
 - create the HTML and CSS for the application
 - create a template for each object
@@ -60,6 +68,8 @@ the completed product will be composed of
 	- `file_storage.py` will be stored here
 
 ## Storage
+
+
 ### How to store instances
 ### File storage == JSON serialization
 
