@@ -55,6 +55,7 @@ class BaseModel:
     def to_dict(self):
         obj_dict = self.__dict__
         obj_dict.update({'__class__': type(self).__name__})
+        obj_dict.update({'id': self.id})
         obj_dict.update({'created_at': datetime.isoformat(self.created_at)})
         obj_dict.update({'updated_at': datetime.isoformat(self.updated_at)})
         return self.__dict__
