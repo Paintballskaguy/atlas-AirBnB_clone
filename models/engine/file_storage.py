@@ -8,22 +8,6 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
-    @property
-    def objects(self):
-        return self.__objects
-
-    @property
-    def file_path(self):
-        return self.__file_path
-
-    @file_path.setter
-    def file_path(self, file_path):
-        self.__file_path = file_path
-
-    @objects.setter
-    def objects(self, objects):
-        self.__objects = objects
-
     def __init__(self):
         pass
 
