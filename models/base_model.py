@@ -9,8 +9,8 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         if len(kwargs) > 0:
             self.id = kwargs.get('id')
-            self.id = kwargs.get('created_at')
-            self.id = kwargs.get('updated_at')
+            self.created_at = kwargs.get('created_at')
+            self.updated_at = kwargs.get('updated_at')
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
