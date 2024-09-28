@@ -43,8 +43,6 @@ import io, os, contextlib, unittest
 from models.base import Base
 
 class TestBaseClass(unittest.TestCase):
-    """ class containing testing functions for Base class
-    """
 
     def test_base_id(self):
         base = Base()
@@ -66,7 +64,7 @@ class TestBaseClass(unittest.TestCase):
     def test_from_json_string(self):
         self.assertEqual(Base.from_json_string(None), [])
         self.assertEqual(Base.from_json_string("[]"), [])
-"""
+
 class TestRectangleClass(unittest.TestCase):
 
     def tearDown(self):
@@ -189,6 +187,6 @@ class TestRectangleClass(unittest.TestCase):
         Rectangle.save_to_file([Rectangle(1, 2)])
         self.assertTrue(os.path.isfile("Rectangle.json"))
         self.assertNotEqual(Rectangle.load_from_file(), [])
-"""
+
 if __name__== '__main__':
     unittest.main()
