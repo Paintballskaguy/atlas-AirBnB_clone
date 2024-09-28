@@ -1,8 +1,13 @@
 #!/usr/bin/python3
+""" this is the launch point of our CLI
+which imports and customize the cmd.Cmd class
+"""
 
 import cmd
 
 class HBNBCommand(cmd.Cmd):
+    """ our reimplementation of cmd.Cmd
+    """
     # implement EOF
     # update help command
     # code should not execute one import
