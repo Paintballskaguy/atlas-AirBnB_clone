@@ -35,6 +35,11 @@
 
 import io, os, contextlib, unittest, datetime
 from models.base_model import BaseModel
+from models import storage
+
+def setUpModule():
+    print(storage)
+
 
 class TestBaseModelClass(unittest.TestCase):
     """ class containing testing functions for Base class
