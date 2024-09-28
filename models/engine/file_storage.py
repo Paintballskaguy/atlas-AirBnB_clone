@@ -45,10 +45,13 @@ class FileStorage:
   
     def reload(self):
         if path.exists(self.__file_path):
-            with open(self.__file_path, 'r') as json_file:
-                obj_dict = json.load(json_file)
-                from models.base_model import BaseModel
-                for key, value in obj_dict.items():
-                    cls_name = value['__class__']
-                    if cls_name == "BaseModel":
-                        self.__object[key] = BaseModel(**value)
+            try:
+                with open(self.__file_path, 'r') as json_file:
+                    obj_dict = json.load(json_file)
+                    from models.base_model import BaseModel
+                    for key, value in obj_dict.items():
+                        cls_name = value['__class__']
+                        if cls_name == "BaseModel":
+                            self.__object[key] = BaseModel(**value)
+    except FileNotFoundError:
+        pass
