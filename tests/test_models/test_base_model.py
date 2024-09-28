@@ -39,7 +39,7 @@ from models.base_model import BaseModel
 class TestBaseModelClass(unittest.TestCase):
     """ class containing testing functions for Base class
     """
-    def setUp(self):
+    def setUpClass():
         pass
 
     def test_base_id(self):
