@@ -20,17 +20,17 @@ class FileStorage:
         self.__objects.update({key: str(obj) })
  
     def save(self):
-        json_string = json.dumps(self.objects)
+        json_string = json.dumps(self.__objects)
         try: 
-            json_file = open(self.file_path, "w") 
+            json_file = open(self.__file_path, "w") 
             json_file.write(json_string)
         except FileNotFoundError:
             pass
   
     def reload(self):
         try: 
-            json_file = open(self.file_path, "r") 
+            json_file = open(self.__file_path, "r") 
             json_string = json_file.read(json_string)
-            self.objects = json.loads(data)
+            self.__objects = json.loads(data)
         except FileNotFoundError:
             return {}
