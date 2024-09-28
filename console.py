@@ -8,7 +8,6 @@ import cmd
 class HBNBCommand(cmd.Cmd):
     """ our reimplementation of cmd.Cmd
     """
-    # implement EOF
     # update help command
     # code should not execute one import
     prompt = '(hbnb) '
@@ -23,6 +22,9 @@ class HBNBCommand(cmd.Cmd):
         'exit this CLI instance hbnb'
         self.close()
         quit()
+
+    def emptyline(self):
+        pass
     
     do_EOF = do_quit 
 
