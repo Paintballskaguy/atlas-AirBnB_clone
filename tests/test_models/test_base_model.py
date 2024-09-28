@@ -63,6 +63,10 @@ class TestBaseModelClass(unittest.TestCase):
         base.save()
         self.assertNotEqual(last_update, base.updated_at)
 
+    def test__str__(self):
+        base = BaseModel()
+        self.assertEqual(base.__str__(), str(base))
+
 """
 class TestRectangleClass(unittest.TestCase):
 
