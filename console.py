@@ -20,7 +20,8 @@ class HBNBCommand(cmd.Cmd):
         'exit this CLI instance hbnb'
         # self.close()
         quit()
-"""
+
+    """
     def do_create(self, arg):
         'creates a new instance of BaseModel'
         # save to json_file
@@ -32,7 +33,8 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         'prints string representation of given object'
         pass
-"""
+    """
+
     def emptyline(self):
         pass
     
