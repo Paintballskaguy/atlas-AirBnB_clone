@@ -9,19 +9,11 @@ class HBNBCommand(cmd.Cmd):
     """ our reimplementation of cmd.Cmd
     """
     prompt = '(hbnb) '
-    file = None
-
-    # def close(self):
-    #     if self.file:
-    #         self.file.close()
-    #         self.file = None
 
     def do_quit(self, arg):
         'exit this CLI instance hbnb'
-        # self.close()
         quit()
 
-    """
     def do_create(self, arg):
         'creates a new instance of BaseModel'
         # save to json_file
@@ -33,7 +25,6 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         'prints string representation of given object'
         pass
-    """
 
     def emptyline(self):
         pass
