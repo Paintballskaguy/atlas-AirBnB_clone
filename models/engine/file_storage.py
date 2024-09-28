@@ -53,5 +53,5 @@ class FileStorage:
                         cls_name = value['__class__']
                         if cls_name == "BaseModel":
                             self.__object[key] = BaseModel(**value)
-    except FileNotFoundError:
-        pass
+            except FileNotFoundError:
+                pass
