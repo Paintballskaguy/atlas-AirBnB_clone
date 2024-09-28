@@ -29,7 +29,7 @@ class FileStorage:
     def reload(self):
         try: 
             json_file = open(self.__file_path, "r") 
-            json_string = json_file.read(json_string)
-            self.__objects = json.loads(data)
+            json_string = json_file.read()
+            self.__objects = json.loads(json_string)
         except FileNotFoundError:
             return {}
