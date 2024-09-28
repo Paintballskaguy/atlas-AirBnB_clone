@@ -54,11 +54,14 @@ class TestBaseModelClass(unittest.TestCase):
 
     def test_to_dict(self):
         base = BaseModel()
+        self.assertIsNotNone(base.to_dict())
         self.assertIsInstance(base.to_dict(), dict)
 
     def test_save(self):
         base = BaseModel()
-        self.assertIsNone(base.save())
+        last_update = base.updated_at
+        base.save()
+        self.assertNotEqual(last_update, base.updated_at)
 
 """
 class TestRectangleClass(unittest.TestCase):
