@@ -22,6 +22,10 @@ class BaseModel:
         return self.__id
 
     @property
+    def name(self):
+        return self.__name
+
+    @property
     def created_at(self):
         return self.__created_at
 
@@ -33,11 +37,15 @@ class BaseModel:
     def id(self, new):
         self.__id = new
 
+    @name.setter
+    def name(self, new):
+        self.__name = new
+
     @created_at.setter
     def created_at(self, new):
         self.__created_at = new
 
-    @created_at.setter
+    @updated_at.setter
     def updated_at(self, new):
         self.__updated_at = new
 
