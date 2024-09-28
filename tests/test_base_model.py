@@ -56,6 +56,10 @@ class TestBaseModelClass(unittest.TestCase):
         base = BaseModel()
         self.assertIsInstance(base.to_dict(), dict)
 
+    def test_save(self):
+        base = BaseModel()
+        self.assertIsNone(base.save())
+
 """
 class TestRectangleClass(unittest.TestCase):
 
