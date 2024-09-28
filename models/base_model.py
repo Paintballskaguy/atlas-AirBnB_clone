@@ -6,10 +6,16 @@ from uuid import uuid4
 
 class BaseModel: 
 
-    def __init__(self):
-        self.id = str(uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = self.created_at
+    def __init__(self, *args, **kwargs):
+        if len(kwargs) > 0:
+            self.id = kwargs.get('id')
+            self.id = kwargs.get('created_at')
+            self.id = kwargs.get('updated_at')
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
+
 
     def __str__(self):
         # [<class name>] (<self.id>) <self.__dict__>
