@@ -23,6 +23,8 @@ class HBNBCommand(cmd.Cmd):
         'exit this CLI instance hbnb'
         self.close()
         quit()
+    
+    do_EOF = do_quit 
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
