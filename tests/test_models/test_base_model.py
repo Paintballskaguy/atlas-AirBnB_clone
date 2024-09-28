@@ -49,8 +49,11 @@ class TestBaseModelClass(unittest.TestCase):
     def test_to_dict(self):
         base = BaseModel()
         base_dict = base.to_dict()
-        # self.assertEqual(base_dict, )
-        self.assertIsInstance(base.to_dict(), dict)
+        self.assertEqual(base_dict,
+                         {'__class__': 'BaseModel',
+                          'id': base_dict.get('id'),
+                          'created_at': base_dict.get('created_at'),
+                          'updated_at': base_dict.get('updated_at') })
 
     def test_save(self):
         base = BaseModel()
