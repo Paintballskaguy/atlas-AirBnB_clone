@@ -32,4 +32,4 @@ class FileStorage:
             json_string = json_file.read()
             self.__objects = json.loads(json_string)
         except FileNotFoundError:
-            return {}
+            self.__objects = {}
