@@ -21,10 +21,12 @@ class BaseModel:
 
     def to_dict(self):
         obj_dict = self.__dict__
-        obj_dict.update({'__class__': type(self).__name__})
-        obj_dict.update({'id': self.id})
-        obj_dict.update({'created_at': self.created_at})
-        obj_dict.update({'updated_at': self.updated_at})
+        obj_dict.update({
+            '__class__': type(self).__name__,
+            'id': self.id,
+            'created_at': str(self.created_at),
+            'updated_at': str(self.updated_at) 
+            })
         return self.__dict__
 
     def to_json(self):
