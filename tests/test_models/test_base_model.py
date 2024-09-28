@@ -44,7 +44,6 @@ class TestBaseModelClass(unittest.TestCase):
 
     def test_base_id(self):
         base = BaseModel()
-        print(base.to_dict())
         self.assertIsNotNone(base.id)
 
     def test_to_dict(self):
