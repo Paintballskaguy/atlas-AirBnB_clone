@@ -8,6 +8,22 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
+    @property
+    def objects(self):
+        return self.__objects
+
+    @property
+    def file_path(self):
+        return self.__file_path
+
+    @file_path.setter
+    def file_path(self, file_path):
+        self.__file_path = file_path
+
+    @objects.setter
+    def objects(self, objects):
+        self.__objects = objects
+
     def __init__(self):
         pass
 
@@ -20,9 +36,17 @@ class FileStorage:
         self.__objects.update({key: str(obj) })
  
     def save(self):
-        # serialize __objects to json in __file_path
-        pass
+        json_string = json.dumps(self.objects)
+        try: 
+            json_file = open(self.file_path, "w") 
+            json_file.write(json_string)
+        except FileNotFoundError:
+            pass
   
     def reload(self):
-        # de-serialize __objects from json in __file_path if it exist
-        pass
+        try: 
+            json_file = open(self.file_path, "r") 
+            json_string = json_file.read(json_string)
+            self.objects = json.loads(data)
+        except FileNotFoundError:
+            return {}
