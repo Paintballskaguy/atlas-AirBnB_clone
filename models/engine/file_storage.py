@@ -7,8 +7,8 @@ class FileStorage:
 
 
     def __init__(self):
-        self.__file_path = "file.json"
-        self.__objects = {}
+        self.file_path = "file.json"
+        self.objects = {}
 
     @property
     def file_path(self):
@@ -27,25 +27,25 @@ class FileStorage:
         self.__file_path = new
 
     def all(self):
-        return self.__objects
+        return self.objects
 
     def new(self, obj):
         key = type(obj).__name__ 
         key = key + obj.id
-        self.__objects.update({key: str(obj) })
+        self.objects.update({key: str(obj) })
  
     def save(self):
-        json_string = json.dumps(self.__objects)
+        json_string = json.dumps(self.objects)
         try: 
-            json_file = open(self.__file_path, "w") 
+            json_file = open(self.file_path, "w") 
             json_file.write(json_string)
         except FileNotFoundError:
             pass
   
     def reload(self):
         try: 
-            json_file = open(self.__file_path, "r") 
+            json_file = open(self.file_path, "r") 
             json_string = json_file.read()
-            self.__objects = json.loads(json_string)
+            self.objects = json.loads(json_string)
         except FileNotFoundError:
-            self.__objects = {}
+            self.objects = {}
