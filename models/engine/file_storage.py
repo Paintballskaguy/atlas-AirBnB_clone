@@ -5,6 +5,8 @@ import json
 
 class FileStorage:
 
+    model = None
+
     def __init__(self):
         self.__file_path = "file.json"
         self.__objects = {}
@@ -52,7 +54,7 @@ class FileStorage:
             json_string = json_file.read()
             json_dict = json.loads(json_string)
             for representation in json_dict:
-                reconstruction = BaseModel(**representation)
+                reconstruction = model(**representation)
                 key = type(reconstruction).__name__ + reconstruction.id
                 self.__objects.update({key: reconstruction})
         except FileNotFoundError:
