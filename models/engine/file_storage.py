@@ -2,6 +2,7 @@
 
 
 import json, importlib, models.base_model
+from models import models.get_instance
 
 class FileStorage:
 
@@ -28,32 +29,26 @@ class FileStorage:
         decomp_objects = {}
         for key, obj in self.__objects.items():
             obj_dict = obj.to_dict()
-            decomp_objects.update({ key: obj_dict })
+            decomp_objects[key] = obj_dict
 
-        json_string = json.dumps(decomp_objects)
-        try:
-            json_file = open(self.__file_path, "w") 
-            json_file.write(json_string)
-            json_file.close()
-        except FileNotFoundError:
-            pass
+        with open(self.__file_path, 'w') as json_file:
+            json.dump(decomp_objects, json_file)
 
     def reload(self):
         """ deserializes string from a json file into
         a dictionary of objects
         """
         try: 
-            json_file = open(self.__file_path, "r") 
-            json_string = json_file.read()
-            json_file.close()
-
-            decomp_objects = json.loads(json_string)
-            for key, value in decomp_objects.items():
-                obj = models.base_model.BaseModel(**value)
-                key = self.construct_key(obj)
-                self.__objects.update({key: obj})
+            with open(self.__file_path, 'r') as json_file:
+                decomp_objects = json.load(json_file)
+                for key, value in decomp_objects.items():
+                    class_name = value['__class__']
+                    module = importlib.import_module('models.' + class_name.lower())
+                    cls = getattr(module, class_name)
+                    obj = cls(**value)
+                    self.__objects[key] = obj
         except FileNotFoundError:
-            self.__objects = {}
+            pass
 
     def construct_key(self, obj):
         return type(obj).__name__ + "." + obj.id
