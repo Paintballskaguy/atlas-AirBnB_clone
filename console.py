@@ -125,13 +125,13 @@ class HBNBCommand(cmd.Cmd):
         quit()
         
     def do_destroy(self, arg):
-        """deletes an instance by class name and id"""
+        'deletes an instance by class name and id'
         instance = self.get_instance(arg)
         if instance is None:
             return
-        key = arg.split()[0] + "." + arg.split()[1]
-        del models.storage.all()[key]
-        models.storage.save()
+        else:
+            key = models.storage.construct_key(instance)
+            models.storage.all().pop(key)
 
     def emptyline(self):
         pass
