@@ -5,12 +5,12 @@ import json, importlib
 
 class FileStorage:
 
-    model = importlib.import_module("models.base_model").BaseModel
+    # model = importlib.import_module("models.base_model").BaseModel
 
     def __init__(self):
-        self.__file_path = "file.json"
-        self.__objects = {}
-    """
+        self.file_path = "file.json"
+        self.objects = {}
+
     @property
     def file_path(self):
         return self.__file_path
@@ -26,36 +26,35 @@ class FileStorage:
     @file_path.setter
     def file_path(self, new):
         self.__file_path = new
-    """
 
     def all(self):
-        return self.__objects
+        return self.objects
 
     def new(self, obj):
         key = type(obj).__name__ 
         key = key + obj.id
-        self.__objects.update({key: str(obj) })
+        self.objects.update({key: str(obj) })
 
     def save(self):
         repr_dict = {}
-        for obj in self.__objects:
+        for obj in self.objects:
             repr_dict.update(obj.to_dict())
 
         json_string = json.dumps(repr_dict)
         try:
-            json_file = open(self.__file_path, "w") 
+            json_file = open(self.file_path, "w") 
             json_file.write(json_string)
         except FileNotFoundError:
             pass
 
     def reload(self):
         try: 
-            json_file = open(self.__file_path, "r") 
+            json_file = open(self.file_path, "r") 
             json_string = json_file.read()
             repr_dict = json.loads(json_string)
             for representation in repr_dict:
                 reconstruction = self.model(**representation)
                 key = type(reconstruction).__name__ + reconstruction.id
-                self.__objects.update({key: reconstruction})
+                self.objects.update({key: reconstruction})
         except FileNotFoundError:
-            self.__objects = {}
+            self.objects = {}
