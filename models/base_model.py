@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 
-from datetime import datetime
+from datetime import datetime, time
 from uuid import uuid4
 # from models import storage
 
@@ -10,8 +10,10 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         if len(kwargs) > 0:
             self.id = kwargs.get('id')
-            self.created_at = kwargs.get('created_at')
-            self.updated_at = kwargs.get('updated_at')
+            created_at = kwargs.get('created_at')
+            updated_at = kwargs.get('updated_at')
+            self.created_at = datetime.fromisoformat(created_at)
+            self.updated_at = datetime.fromisoformat(updated_at)
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
