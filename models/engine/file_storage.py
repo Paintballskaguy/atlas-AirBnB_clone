@@ -20,7 +20,7 @@ class FileStorage:
         with the key string <class>.<id>
         """
         key = type(new_obj).__name__ 
-        key = key + new_obj.id
+        key = key + "." + new_obj.id
         self.__objects.update({key: new_obj })
 
     def save(self):
@@ -50,5 +50,6 @@ class FileStorage:
                 obj = models.base_model.BaseModel(**value)
                 key = type(obj).__name__ + obj.id
                 self.__objects.update({key: obj})
+            json_file.close()
         except FileNotFoundError:
             self.__objects = {}
