@@ -7,9 +7,9 @@ from models.base_model import BaseModel
 class FileStorage:
 
     def __init__(self):
-        self.file_path = "file.json"
-        self.objects = {}
-
+        self.__file_path = "file.json"
+        self.__objects = {}
+    """
     @property
     def file_path(self):
         return self.__file_path
@@ -25,35 +25,36 @@ class FileStorage:
     @file_path.setter
     def file_path(self, new):
         self.__file_path = new
+    """
 
     def all(self):
-        return self.objects
+        return self.__objects
 
     def new(self, obj):
         key = type(obj).__name__ 
         key = key + obj.id
-        self.objects.update({key: str(obj) })
+        self.__objects.update({key: str(obj) })
 
     def save(self):
         repr_dict = {}
-        for obj in self.objects:
+        for obj in self.__objects:
             repr_dict.update(obj.to_dict())
 
         json_string = json.dumps(repr_dict)
         try:
-            json_file = open(self.file_path, "w") 
+            json_file = open(self.__file_path, "w") 
             json_file.write(json_string)
         except FileNotFoundError:
             pass
 
     def reload(self):
         try: 
-            json_file = open(self.file_path, "r") 
+            json_file = open(self.__file_path, "r") 
             json_string = json_file.read()
             json_dict = json.loads(json_string)
             for representation in json_dict:
                 reconstruction = BaseModel(**representation)
                 key = type(reconstruction).__name__ + reconstruction.id
-                self.objects.update({key: reconstruction})
+                self.__objects.update({key: reconstruction})
         except FileNotFoundError:
-            self.objects = {}
+            self.__objects = {}
