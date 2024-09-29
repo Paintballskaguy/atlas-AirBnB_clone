@@ -26,8 +26,17 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(instance)
 
+
     def do_destroy(self, arg):
         'delete instance given by the class name and id'
+        instance = self.get_instance(arg)
+        if instance is None:
+            return
+        else:
+            key = models.storage.construct_key(instance)
+            models.storage.all().pop(key)
+
+    def do_destroy(self, arg):
         # save change to json file
         # errors:
             # ** class name missing **
@@ -123,15 +132,6 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, arg):
         'exit this CLI instance hbnb'
         quit()
-        
-    def do_destroy(self, arg):
-        'deletes an instance by class name and id'
-        instance = self.get_instance(arg)
-        if instance is None:
-            return
-        else:
-            key = models.storage.construct_key(instance)
-            models.storage.all().pop(key)
 
     def emptyline(self):
         pass
