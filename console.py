@@ -4,6 +4,7 @@ which imports and customize the cmd.Cmd class
 """
 
 import cmd
+from models import valid_classes
 
 class HBNBCommand(cmd.Cmd):
     """ our reimplementation of cmd.Cmd
@@ -45,8 +46,7 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_update(self, arg):
-        'updates the instance given by class_name and id
-        usage: update <class> <id> <attr> "<val>"'
+        'updates the instance given by class_name and id. usage: update <class> <id> <attr> "<val>"'
         # only one attribute can be updated at a time
         # save changes to json
         # assume given <attr> is valid
@@ -62,6 +62,19 @@ class HBNBCommand(cmd.Cmd):
         # id, created_at, and updated_at cannot be updated and wont be passed
         # expect only simple args : string, int, and float
         pass
+
+    def get_instance(class_name=None, id_num=None):
+        if class_name is None:
+            print('** class name missing **')
+            return None
+        elif class_name not in valid_classes:
+            print("** class doesn't exist **")
+            return None
+        elif id_num is None:
+            print('** instance id missing **')
+            return None
+        # check class name validity
+        # check if object exist based on id_num
 
     def do_quit(self, arg):
         'exit this CLI instance hbnb'
