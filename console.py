@@ -66,7 +66,37 @@ class HBNBCommand(cmd.Cmd):
         # ignore additional arguments
         # id, created_at, and updated_at cannot be updated and wont be passed
         # expect only simple args : string, int, and float
-        pass
+        args = arg.split():
+        if len(args) < 1:
+            print("** class name missing**")
+            return
+        if args[0] not in models.valid_classes:
+            print("** class doesn't exist**")
+            return
+        if len(args) < 2:
+            print("** instance id missing**"")
+            return
+        if instance is None:
+            return
+        if len(args) < 3:
+            print("** attribute name missing**")
+             return
+        if len(args) < 4:
+            print("** value missing**")
+            return
+            
+        attr_name = args[2]
+        attr_value = args[3].strip("")
+        
+        if hasattr(instance, attr_name):
+            attr_type = type(getattr(instance, attr_name))
+            if attr_type is int:
+                attr_value = int(attr_value)
+            elif attr_type is float:
+                attr_value = float(attr_value)
+                
+        setattr(instance, attr_name, attr_value)
+        instance.save()
 
     def get_instance(self, args):
         args = args.split()
