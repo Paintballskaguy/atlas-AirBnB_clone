@@ -19,9 +19,8 @@ class FileStorage:
         """ adds a new object to the dictionary object
         with the key string <class>.<id>
         """
-        key = type(new_obj).__name__ 
-        key = key + "." + new_obj.id
-        self.__objects.update({key: new_obj })
+        key = type(new_obj).__name__ + "." + new_obj.id
+        self.__objects.update({ key: new_obj })
 
     def save(self):
         """ serializes objects into a json file
@@ -45,11 +44,12 @@ class FileStorage:
         try: 
             json_file = open(self.__file_path, "r") 
             json_string = json_file.read()
+            json_file.close()
+
             decomp_objects = json.loads(json_string)
             for key, value in decomp_objects.items():
                 obj = models.base_model.BaseModel(**value)
-                key = type(obj).__name__ + obj.id
+                key = type(obj).__name__ + "." + obj.id
                 self.__objects.update({key: obj})
-            json_file.close()
         except FileNotFoundError:
             self.__objects = {}
