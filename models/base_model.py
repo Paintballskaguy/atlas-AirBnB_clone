@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 
 
-import json
 from datetime import datetime
 from uuid import uuid4
 from models import storage
@@ -37,6 +36,3 @@ class BaseModel:
             'updated_at': str(self.updated_at) 
             })
         return self.__dict__
-
-    def to_json(self):
-        pass

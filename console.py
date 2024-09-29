@@ -73,8 +73,9 @@ class HBNBCommand(cmd.Cmd):
         elif id_num is None:
             print('** instance id missing **')
             return None
-        # check class name validity
-        # check if object exist based on id_num
+        else:
+            # check if object exist based on id_num
+            pass
 
     def do_quit(self, arg):
         'exit this CLI instance hbnb'

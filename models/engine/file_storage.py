@@ -5,7 +5,6 @@ import json
 
 class FileStorage:
 
-
     def __init__(self):
         self.file_path = "file.json"
         self.objects = {}
@@ -36,7 +35,7 @@ class FileStorage:
  
     def save(self):
         json_string = json.dumps(self.objects)
-        try: 
+        try:
             json_file = open(self.file_path, "w") 
             json_file.write(json_string)
         except FileNotFoundError:
