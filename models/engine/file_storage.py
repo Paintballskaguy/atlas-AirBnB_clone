@@ -10,7 +10,7 @@ class FileStorage:
     def __init__(self):
         self.__file_path = "file.json"
         self.__objects = {}
-    """
+
     @property
     def file_path(self):
         return self.__file_path
@@ -26,7 +26,6 @@ class FileStorage:
     @file_path.setter
     def file_path(self, new):
         self.__file_path = new
-    """
 
     def all(self):
         return self.__objects
@@ -52,9 +51,9 @@ class FileStorage:
         try: 
             json_file = open(self.__file_path, "r") 
             json_string = json_file.read()
-            json_dict = json.loads(json_string)
-            for representation in json_dict:
-                reconstruction = self.model(**representation)
+            repr_dict = json.loads(json_string)
+            for representation in repr_dict:
+                reconstruction = self.model(representation)
                 key = type(reconstruction).__name__ + reconstruction.id
                 self.__objects.update({key: reconstruction})
         except FileNotFoundError:
