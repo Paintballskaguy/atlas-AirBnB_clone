@@ -27,7 +27,8 @@ class FileStorage:
         """
         decomp_objects = {}
         for key, obj in self.__objects.items():
-            decomp_objects.update({key: obj.to_dict()})
+            obj_dict = obj.to_dict()
+            decomp_objects.update({ key: obj_dict })
 
         json_string = json.dumps(decomp_objects)
         try:
