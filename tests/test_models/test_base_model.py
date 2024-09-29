@@ -35,10 +35,15 @@
 
 import io, os, contextlib, unittest, datetime
 from models.base_model import BaseModel
-from models import storage
+# from models import storage
 
 def setUpModule():
-    print(storage)
+    test_obj = BaseModel()
+    date = test_obj.created_at
+    date_as_str = date.isoformat()
+    print(type(date))
+    print(type(date_as_str))
+    print(test_obj.created_at)
 
 
 class TestBaseModelClass(unittest.TestCase):
