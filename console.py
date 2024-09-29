@@ -48,8 +48,11 @@ class HBNBCommand(cmd.Cmd):
                 obj_list.append(f"[{key[0]}] ({key[1]}) {value}")
             print(obj_list)
         else:
-            # error: ** class doesn't exist **
-            print("cannot print out specific classes just yet")
+            if args[0] not in models.valid_classes:
+                print("** class doesn't exist **")
+                return
+            else:
+                print("cannot print out specific classes just yet")
 
     def do_update(self, arg):
         'updates the instance given by class_name and id. usage: update <class> <id> <attr> "<val>"'
