@@ -1,60 +1,54 @@
 #!/usr/bin/python3
 
 
-import json, importlib
+import json, importlib, models.base_model
 
 class FileStorage:
 
-    # model = importlib.import_module("models.base_model").BaseModel
+    ######## private class attributes ########
+    __file_path = "file.json"
+    __objects = {}
 
-    def __init__(self):
-        self.file_path = "file.json"
-        self.objects = {}
-
-    @property
-    def file_path(self):
-        return self.__file_path
-
-    @property
-    def objects(self):
+    ######## public instance methods ########
+    def all(self):
+        """ returns a dictionary of objects
+        """
         return self.__objects
 
-    @objects.setter
-    def objects(self, new):
-        self.__objects = new
-
-    @file_path.setter
-    def file_path(self, new):
-        self.__file_path = new
-
-    def all(self):
-        return self.objects
-
-    def new(self, obj):
-        key = type(obj).__name__ 
-        key = key + obj.id
-        self.objects.update({key: str(obj) })
+    def new(self, new_obj):
+        """ adds a new object to the dictionary object
+        with the key string <class>.<id>
+        """
+        key = type(new_obj).__name__ 
+        key = key + new_obj.id
+        self.__objects.update({key: new_obj })
 
     def save(self):
-        repr_dict = {}
-        for obj in self.objects:
-            repr_dict.update(obj.to_dict())
+        """ serializes objects into a json file
+        """
+        decomp_objects = {}
+        for key, obj in self.__objects.items():
+            decomp_objects.update({key: obj.to_dict()})
 
-        json_string = json.dumps(repr_dict)
+        json_string = json.dumps(decomp_objects)
         try:
-            json_file = open(self.file_path, "w") 
+            json_file = open(self.__file_path, "w") 
             json_file.write(json_string)
+            json_file.close()
         except FileNotFoundError:
             pass
 
     def reload(self):
+        """ deserializes string from a json file into
+        a dictionary of objects
+        """
         try: 
-            json_file = open(self.file_path, "r") 
+            json_file = open(self.__file_path, "r") 
             json_string = json_file.read()
-            repr_dict = json.loads(json_string)
-            for representation in repr_dict:
-                reconstruction = self.model(**representation)
-                key = type(reconstruction).__name__ + reconstruction.id
-                self.objects.update({key: reconstruction})
+            decomp_objects = json.loads(json_string)
+            for key, value in decomp_objects.items():
+                obj = models.base_model.BaseModel(**value)
+                key = type(obj).__name__ + obj.id
+                self.__objects.update({key: obj})
         except FileNotFoundError:
-            self.objects = {}
+            self.__objects = {}
