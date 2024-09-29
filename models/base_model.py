@@ -31,11 +31,11 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        obj_dict = self.__dict__
+        obj_dict = self.__dict__.copy()
         obj_dict.update({
-            '__class__': type(self).__name__,
+            '__class__': self.__class__.__name__,
             'id': self.id,
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat()
             })
-        return self.__dict__
+        return obj_dict
