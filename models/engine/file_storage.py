@@ -2,7 +2,6 @@
 
 
 import json, importlib, models.base_model
-from models import models.get_instance
 
 class FileStorage:
 
