@@ -2,6 +2,7 @@
 
 
 import json
+from models.base_model import BaseModel
 
 class FileStorage:
 
@@ -32,19 +33,27 @@ class FileStorage:
         key = type(obj).__name__ 
         key = key + obj.id
         self.objects.update({key: str(obj) })
- 
+
     def save(self):
-        json_string = json.dumps(self.objects)
+        repr_dict = {}
+        for obj in self.objects:
+            repr_dict.update(obj.to_dict())
+
+        json_string = json.dumps(repr_dict)
         try:
             json_file = open(self.file_path, "w") 
             json_file.write(json_string)
         except FileNotFoundError:
             pass
-  
+
     def reload(self):
         try: 
             json_file = open(self.file_path, "r") 
             json_string = json_file.read()
-            self.objects = json.loads(json_string)
+            json_dict = json.loads(json_string)
+            for representation in json_dict:
+                reconstruction = BaseModel(**representation)
+                key = type(reconstruction).__name__ + reconstruction.id
+                self.objects.update({key: reconstruction})
         except FileNotFoundError:
             self.objects = {}
