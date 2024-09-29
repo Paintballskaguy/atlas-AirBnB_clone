@@ -91,11 +91,21 @@ class HBNBCommand(cmd.Cmd):
             instance = models.storage.all().get(key)  
             if instance is None: 
                 print('** instance not found **')
+                return None
             return instance
 
     def do_quit(self, arg):
         'exit this CLI instance hbnb'
         quit()
+        
+    def do_destroy(self, arg):
+        """deletes an instance by class name and id"""
+        instance = self.get_instance(arg)
+        if instance is None:
+            return
+        key = arg.split()[0] + "." + arg.split()[1]
+        del models.storage.all()[key]
+        models.storage.save()
 
     def emptyline(self):
         pass
