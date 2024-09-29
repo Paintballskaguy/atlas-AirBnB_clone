@@ -54,7 +54,7 @@ class FileStorage:
             json_string = json_file.read()
             json_dict = json.loads(json_string)
             for representation in json_dict:
-                reconstruction = model(**representation)
+                reconstruction = self.model(**representation)
                 key = type(reconstruction).__name__ + reconstruction.id
                 self.__objects.update({key: reconstruction})
         except FileNotFoundError:
