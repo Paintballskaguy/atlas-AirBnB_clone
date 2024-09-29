@@ -36,15 +36,6 @@ class HBNBCommand(cmd.Cmd):
             key = models.storage.construct_key(instance)
             models.storage.all().pop(key)
 
-    def do_destroy(self, arg):
-        # save change to json file
-        # errors:
-            # ** class name missing **
-            # ** class doesn't exist **
-            # ** instance id missing **
-            # ** no instance found **
-        pass
-
     def do_all(self, args):
         obj_list = []
         if not args:
