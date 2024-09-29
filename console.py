@@ -36,12 +36,20 @@ class HBNBCommand(cmd.Cmd):
             # ** no instance found **
         pass
 
-    def do_all(self, arg):
+    def do_all(self, args):
         'outputs string representations for every existing instance or for all of a class'
-        # error: ** class doesn't exist **
-        # example: (hbnb) all BaseModel
-        #   ["[BaseModel] (49faff9a-6318-451f-87b6-910505c55907) {'created_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903293), 'id': '49faff9a-6318-451f-87b6-910505c55907', 'updated_at': datetime.datetime(2017, 10, 2, 3, 10, 25, 903300)}"]`
-        pass
+        args = args.split()
+        if len(args) == 0:
+            obj_list = []
+            for key, value in models.storage.all().items():
+                key = key.split(".")
+                value = value.to_dict()
+                value.pop('__class__')
+                obj_list.append(f"[{key[0]}] ({key[1]}) {value}")
+            print(obj_list)
+        else:
+            # error: ** class doesn't exist **
+            print("cannot print out specific classes just yet")
 
     def do_update(self, arg):
         'updates the instance given by class_name and id. usage: update <class> <id> <attr> "<val>"'
