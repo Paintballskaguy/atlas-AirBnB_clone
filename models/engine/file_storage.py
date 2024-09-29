@@ -19,7 +19,7 @@ class FileStorage:
         """ adds a new object to the dictionary object
         with the key string <class>.<id>
         """
-        key = type(new_obj).__name__ + "." + new_obj.id
+        key = self.construct_key(new_obj)
         self.__objects.update({ key: new_obj })
 
     def save(self):
@@ -49,7 +49,10 @@ class FileStorage:
             decomp_objects = json.loads(json_string)
             for key, value in decomp_objects.items():
                 obj = models.base_model.BaseModel(**value)
-                key = type(obj).__name__ + "." + obj.id
+                key = self.construct_key(obj)
                 self.__objects.update({key: obj})
         except FileNotFoundError:
             self.__objects = {}
+
+    def construct_key(self, obj):
+        return type(obj).__name__ + "." + obj.id
