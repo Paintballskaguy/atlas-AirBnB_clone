@@ -3,8 +3,7 @@
 which imports and customize the cmd.Cmd class
 """
 
-import cmd
-from models import valid_classes
+import cmd, models
 
 class HBNBCommand(cmd.Cmd):
     """ our reimplementation of cmd.Cmd
@@ -19,14 +18,13 @@ class HBNBCommand(cmd.Cmd):
         # if class name doesnt exist print: ** class doesn't exist **
         pass
 
-    def do_show(self, arg):
+    def do_show(self, args):
         'outputs representation of an instance given the class name and id'
-        # errors:
-            # ** class name missing **
-            # ** class doesn't exist **
-            # ** instance id missing **
-            # ** no instance found **
-        pass
+        instance = self.get_instance(args)
+        if instance is None:
+            return
+        else:
+            print(instance)
 
     def do_destroy(self, arg):
         'delete instance given by the class name and id'
@@ -63,19 +61,26 @@ class HBNBCommand(cmd.Cmd):
         # expect only simple args : string, int, and float
         pass
 
-    def get_instance(class_name=None, id_num=None):
+    def get_instance(self, args):
+        args = args.split()
+        class_name = args[0] if len(args) > 0 else None
+        id_num = args[1] if len(args) > 1 else None
+
         if class_name is None:
             print('** class name missing **')
             return None
-        elif class_name not in valid_classes:
+        elif class_name not in models.valid_classes:
             print("** class doesn't exist **")
             return None
         elif id_num is None:
             print('** instance id missing **')
             return None
         else:
-            # check if object exist based on id_num
-            pass
+            key = class_name + "." + id_num
+            instance = models.storage.all().get(key)  
+            if instance is None: 
+                print('** instance not found **')
+            return instance
 
     def do_quit(self, arg):
         'exit this CLI instance hbnb'
@@ -83,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         pass
-    
+ 
     do_EOF = do_quit 
 
 if __name__ == '__main__':
