@@ -66,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
         # ignore additional arguments
         # id, created_at, and updated_at cannot be updated and wont be passed
         # expect only simple args : string, int, and float
-        args = arg.split():
+        args = arg.split()
         if len(args) < 1:
             print("** class name missing**")
             return
