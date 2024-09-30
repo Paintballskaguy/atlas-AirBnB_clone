@@ -10,17 +10,17 @@ class BaseModel:
     def __init__(self, *args, **kwargs):
         if kwargs:
             self.id = kwargs.get('id', str(uuid4()))
-            created_at = kwargs.get('created_at', datetime.now().isoformat())
-            updated_at = kwargs.get('updated_at', datetime.now().isoformat())
+            created_at = kwargs.get('created_at')
+            updated_at = kwargs.get('updated_at')
             if isinstance(created_at, str):
                 self.created_at = datetime.fromisoformat(created_at)
             else:
-                self.created_at = created_at
+                self.created_at = datetime.now()
         
             if isinstance(updated_at, str):
                 self.updated_at = datetime.fromisoformat(updated_at)
             else:
-                self.updated_at = updated_at
+                self.updated_at = datetime.now()
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
