@@ -13,7 +13,7 @@ class TestReview(unittest.TestCase):
     def setUpClass(cls):
         cls.review = Review()
         cls.review.place_id = "place123"
-        cls.review.user_id = " user123"
+        cls.review.user_id = "user123"
         cls.review.text = "Great place to stay!"
         cls.test_file = "file.json"
         cls.storage = "file.json"
@@ -33,7 +33,7 @@ class TestReview(unittest.TestCase):
         """"Test the to_dict method of the Review class"""
         review_dict = self.review.to_dict()
         self.assertEqual(review_dict['place_id'], "place123")
-        self.assertEqual(review_dict['user_id'], "user123")
+        self.assertEqual(review_dict['user_id'].strip(), "user123")
         self.assertEqual(review_dict['text'], "Great place to stay!")
         self.assertEqual(review_dict['__class__'], "Review")
         

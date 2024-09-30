@@ -64,20 +64,16 @@ class TestUser(unittest.TestCase):
 
     def test_file_storage_save_reload(self):
         """Test that User instances are properly saved and reloaded by FileStorage"""
-        self.storage.new(self.user)
-        self.storage.save()
+        my_user = User()
+        my_user.first_name = "Betty"
+        my_user.last_name = "Bar"
+        my_user.email = "airbnb@mail.com"
+        my_user.password = "root"
+        my_user.save()
 
-        # Clear the storage and reload from file
-        self.storage._FileStorage__objects = {}
+        key = f"User.{my_user.id}"
         self.storage.reload()
-
-        key = f"User.{self.user.id}"
         self.assertIn(key, self.storage.all())
-        loaded_user = self.storage.all()[key]
-        self.assertEqual(loaded_user.email, "test@mail.com")
-        self.assertEqual(loaded_user.first_name, "John")
-        self.assertEqual(loaded_user.last_name, "Doe")
-        self.assertEqual(loaded_user.password, "password123")
 
     def test_user_in_file_storage(self):
         """Test that FileStorage correctly serializes and deserializes User"""

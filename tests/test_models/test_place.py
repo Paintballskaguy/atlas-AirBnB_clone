@@ -6,7 +6,7 @@ from models.engine.file_storage import FileStorage
 import os
 
 
-Class TestPlace(unittest.TestCase):
+class TestPlace(unittest.TestCase):
     """Test cases for the Places class"""
     
     @classmethod
