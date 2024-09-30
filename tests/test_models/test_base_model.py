@@ -47,33 +47,52 @@ def setUpModule():
 
 
 class TestBaseModelClass(unittest.TestCase):
-    """ class containing testing functions for Base class
-    """
-    def setUpClass():
-        pass
+    """Class containing testing functions for BaseModel"""
+
+    @classmethod
+    def setUpClass(cls):
+        """Set up any state specific to the test case."""
+        cls.base = BaseModel()
 
     def test_base_id(self):
-        base = BaseModel()
-        self.assertIsNotNone(base.id)
+        """Test if id is set on initialization"""
+        self.assertIsNotNone(self.base.id)
+        self.assertIsInstance(self.base.id, str)
 
     def test_to_dict(self):
-        base = BaseModel()
-        base_dict = base.to_dict()
-        self.assertEqual(base_dict,
-                         {'__class__': 'BaseModel',
-                          'id': base_dict.get('id'),
-                          'created_at': base_dict.get('created_at'),
-                          'updated_at': base_dict.get('updated_at') })
+        """Test to_dict method"""
+        base_dict = self.base.to_dict()
+        self.assertEqual(base_dict['__class__'], 'BaseModel')
+        self.assertEqual(base_dict['id'], self.base.id)
+        self.assertIsInstance(base_dict['created_at'], str)
+        self.assertIsInstance(base_dict['updated_at'], str)
+
+        # Check if datetime fields are in ISO format
+        created_at = datetime.datetime.fromisoformat(base_dict['created_at'])
+        updated_at = datetime.datetime.fromisoformat(base_dict['updated_at'])
+        self.assertIsInstance(created_at, datetime.datetime)
+        self.assertIsInstance(updated_at, datetime.datetime)
 
     def test_save(self):
-        base = BaseModel()
-        last_update = base.updated_at
-        base.save()
-        self.assertNotEqual(last_update, base.updated_at)
+        """Test if save method updates the updated_at field"""
+        last_update = self.base.updated_at
+        self.base.save()
+        self.assertNotEqual(last_update, self.base.updated_at)
+        self.assertTrue(self.base.updated_at > last_update)
 
     def test__str__(self):
-        base = BaseModel()
-        self.assertEqual(base.__str__(), str(base))
+        """Test if __str__ returns the expected string format"""
+        expected_str = "[BaseModel] ({}) {}".format(self.base.id, self.base.__dict__)
+        self.assertEqual(str(self.base), expected_str)
 
-if __name__== '__main__':
+    def test_init_from_kwargs(self):
+        """Test initialization from kwargs"""
+        date = datetime.datetime.now().isoformat()
+        data = {'id': '1234', 'created_at': date, 'updated_at': date}
+        base = BaseModel(**data)
+        self.assertEqual(base.id, '1234')
+        self.assertEqual(base.created_at.isoformat(), date)
+        self.assertEqual(base.updated_at.isoformat(), date)
+
+if __name__ == '__main__':
     unittest.main()
