@@ -52,8 +52,8 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertIsInstance(base_dict['created_at'], str)
         self.assertIsInstance(base_dict['updated_at'], str)
 
-        created_at = datetime.datetime.fromisoformat(base_dict['created_at'])
-        updated_at = datetime.datetime.fromisoformat(base_dict['updated_at'])
+        created_at = datetime.fromisoformat(base_dict['created_at'])
+        updated_at = datetime.fromisoformat(base_dict['updated_at'])
         self.assertIsInstance(created_at, datetime.datetime)
         self.assertIsInstance(updated_at, datetime.datetime)
 

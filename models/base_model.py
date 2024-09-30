@@ -12,8 +12,10 @@ class BaseModel:
             self.id = kwargs.get('id', str(uuid4()))
             created_at = kwargs.get('created_at', datetime.now().isoformat())
             updated_at = kwargs.get('updated_at', datetime.now().isoformat())
-            self.created_at = datetime.fromisoformat(created_at)
-            self.updated_at = datetime.fromisoformat(updated_at)
+            if isinstance(created_at, str):
+                self.created_at = datetime.fromisoformat(created_at)
+            if isinstance(updated_at, str):
+                self.updated_at = datetime.fromisoformat(updated_at)
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
@@ -27,7 +29,7 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.now()
-        key = models.storage.construct_key(self)
+        key = models.storage.construct_key(self) 
         models.storage.new(self)
         models.storage.save()
 
