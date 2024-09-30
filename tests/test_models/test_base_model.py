@@ -7,6 +7,7 @@ import io, os, contextlib, unittest, datetime
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 import models
+from models.base_model import datetime
 
 
 class TestBaseModelClass(unittest.TestCase):
@@ -60,8 +61,8 @@ class TestBaseModelClass(unittest.TestCase):
         """Test BaseModel initialization from a dictionary."""
         data = {
             'id': '1234',
-            'created_at': '2022-10-10T10:00:00.000000',
-            'updated_at': '2022-10-10T10:00:00.000000'
+            'created_at': datetime,
+            'updated_at': datetime
             }
         obj = BaseModel(**data)
         self.assertEqual(obj.created_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
