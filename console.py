@@ -6,10 +6,20 @@ which imports and customize the cmd.Cmd class
 import cmd, models
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 model_classes = {
         'BaseModel': BaseModel,
-        'User': User
+        'User': User,
+        'State': State,
+        'City': City,
+        'Place': Place,
+        'Amenity': Amenity,
+        'Review': Review
         }
 
 class HBNBCommand(cmd.Cmd):
@@ -56,7 +66,7 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             for value in models.storage.all().values():
                 obj_list.append(str(value))
-        elif args in models.valid_classes:
+        elif args in model_classes.keys():
             for key, value in models.storage.all().items():
                 if key.startswith(args):
                     obj_list.append(str(value))
@@ -67,12 +77,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         'updates the instance given by class_name and id. usage: update <class> <id> <attr> "<val>"'
-        # assume given <attr> is valid
-        # typecast <val> accordingly 
-        # expect only simple args : string, int, and float
-        # only one attribute can be updated at a time
-        # ignore additional arguments
-        # save changes to json
+
         instance = self.get_instance(arg)
         if instance is None:
             return
@@ -83,8 +88,6 @@ class HBNBCommand(cmd.Cmd):
 
         attr = attr_val[0]
         value = attr_val[1]
-        # if attr_val[0] in ('id', 'created_at', 'updated_at'):
-        #     return
 
         if hasattr(instance, attr):
             attr_type = type(getattr(instance, attr))
@@ -127,7 +130,7 @@ class HBNBCommand(cmd.Cmd):
         if class_name is None:
             print('** class name missing **')
             return None
-        elif class_name not in models.valid_classes:
+        elif class_name not in model_classes.keys():
             print("** class doesn't exist **")
             return None
         elif id_num is None:
