@@ -1,17 +1,18 @@
 #!/usr/bin/python3
-""" reference list of assert methods: 
-    Common assert methods used in unittest for reference.
-"""
+"""Unittest module for BaseModel class."""
 
-import io, os, contextlib, unittest, datetime
+import io
+import os
+import contextlib
+import unittest
+from datetime import datetime
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 import models
-from models.base_model import datetime
 
 
 class TestBaseModelClass(unittest.TestCase):
-    """Class containing testing functions for BaseModel"""
+    """Class containing testing functions for BaseModel."""
 
     @classmethod
     def setUpClass(cls):
@@ -25,27 +26,15 @@ class TestBaseModelClass(unittest.TestCase):
         print("Setting up for a test...")
         self.storage = FileStorage()
         self.storage.__objects = {}
-        """     
-    def tearDown(self):
-        ##Clean up after each test method runs.
-        print("Cleaning up after a test...")
-        if os.path.exists(self.test_file):
-            os.remove(self.test_file)
-        
-    @classmethod
-    def tearDownClass(cls):
-        ####Tear down any class-specific resources after all tests.
-        print("Tearing down class resources for TestBaseModelClass...")
-        if os.path.exists(cls.test_file):
-            os.remove(cls.test_file)
-        """
-    def test_base_id(self):
-        """Test if id is set on initialization"""
+        self.base = BaseModel()
+
+    def test_base_id_is_set(self):
+        """Test if id is set on initialization."""
         self.assertIsNotNone(self.base.id)
         self.assertIsInstance(self.base.id, str)
 
     def test_to_dict(self):
-        """Test to_dict method"""
+        """Test to_dict method."""
         base_dict = self.base.to_dict()
         self.assertEqual(base_dict['__class__'], 'BaseModel')
         self.assertEqual(base_dict['id'], self.base.id)
@@ -59,16 +48,17 @@ class TestBaseModelClass(unittest.TestCase):
 
     def test_base_model_init(self):
         """Test BaseModel initialization from a dictionary."""
+        date_str = '2022-10-10T10:00:00'
         data = {
             'id': '1234',
-            'created_at': datetime,
-            'updated_at': datetime
-            }
+            'created_at': date_str,
+            'updated_at': date_str
+        }
         obj = BaseModel(**data)
         self.assertIsInstance(obj.created_at, datetime)
         self.assertEqual(obj.id, '1234')
-        self.assertEqual(obj.created_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
-        self.assertEqual(obj.updated_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
+        self.assertEqual(obj.created_at.isoformat(timespec='seconds'), date_str)
+        self.assertEqual(obj.updated_at.isoformat(timespec='seconds'), date_str)
 
     def test_base_model_save(self):
         """Test that BaseModel.save() updates updated_at and stores in storage."""
@@ -76,23 +66,19 @@ class TestBaseModelClass(unittest.TestCase):
         self.base.save()
         self.assertNotEqual(last_update, self.base.updated_at)
 
-    def test_base_id(self):
-        """Test if id is set on initialization."""
-        self.assertIsNotNone(self.base.id)
-
     def test__str__(self):
-        """Test if __str__ returns the expected string format"""
+        """Test if __str__ returns the expected string format."""
         expected_str = "[BaseModel] ({}) {}".format(self.base.id, self.base.__dict__)
         self.assertEqual(str(self.base), expected_str)
 
     def test_init_from_kwargs(self):
-        """Test initialization from kwargs"""
+        """Test initialization from kwargs."""
         date = "2022-10-10T10:00:00"
         data = {'id': '1234', 'created_at': date, 'updated_at': date}
         base = BaseModel(**data)
         self.assertEqual(base.id, '1234')
-        self.assertEqual(base.created_at.isoformat(), date)
-        self.assertEqual(base.updated_at.isoformat(), date)
+        self.assertEqual(base.created_at.isoformat(timespec='seconds'), date)
+        self.assertEqual(base.updated_at.isoformat(timespec='seconds'), date)
 
 
 if __name__ == '__main__':
