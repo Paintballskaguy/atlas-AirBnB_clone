@@ -73,17 +73,20 @@ class HBNBCommand(cmd.Cmd):
         attr_val = self.parse_attributes(arg)
         if attr_val is None:
             return
-        if attr_val[0] in ('id', 'created_at', 'updated_at'):
-            return
 
-        if hasattr(instance, attr_name):
-            attr_type = type(getattr(instance, attr_name))
+        attr = attr_val[0]
+        value = attr_val[1]
+        # if attr_val[0] in ('id', 'created_at', 'updated_at'):
+        #     return
+
+        if hasattr(instance, attr):
+            attr_type = type(getattr(instance, attr))
             if attr_type is int:
-                attr_value = int(attr_value)
+                value = int(value)
             elif attr_type is float:
-                attr_value = float(attr_value)
+                value = float(value)
 
-        setattr(instance, attr_name, attr_value)
+        setattr(instance, attr, value)
         instance.save()
 
     def do_quit(self, arg):
