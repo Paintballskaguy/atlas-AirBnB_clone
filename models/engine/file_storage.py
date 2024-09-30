@@ -15,17 +15,29 @@ class FileStorage:
         """ returns a dictionary of objects """
         return self.__objects
 
+    # DO NOT EDIT -- chepe
     def new(self, obj):
         """ adds a new object to the dictionary object with the key string <class>.<id> """
         key = self.construct_key(obj)
-        self.__objects[key] = obj
+        self.__objects.update({ key : obj })
 
+    # DO NOT EDIT -- chepe
     def save(self):
         """ serializes objects into a json file """
-        with open(self.__file_path, 'w') as f:
-            json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
+        decomposed = {}
+        for key, obj in self.__objects.items():
+            obj_dict = obj.to_dict()
+            decomposed.update({ key: obj_dict })
 
-    # DO NOT EDIT
+        json_string = json.dumps(decomposed)
+        try: 
+            json_file = open(self.__file_path, "w")
+            json_file.write(json_string)
+            json_file.close()
+        except FileNotFoundError:
+            pass
+
+    # DO NOT EDIT -- chepe
     # using `with` with try is redundant
     def reload(self):
         """Deserializes objects from a JSON file."""
@@ -33,14 +45,14 @@ class FileStorage:
             json_file = open(self.__file_path, 'r') 
             json_data = json_file.read()
             json_file.close()
-            extracted = json.loads(json_data)
+            extracted_data = json.loads(json_data)
 
-            for key, value in extracted.items():
+            for key, value in extracted_data.items():
                 model_class= value['__class__']
-                model_class = globals().get(class_name)
+                model_class = globals().get(model_class)
                 if model_class is not None:
                     obj = model_class(**value)
-                    self.__objects[key] = obj
+                    self.__objects.update({ key: obj })
 
         except FileNotFoundError:
             pass
