@@ -34,7 +34,6 @@ class BaseModel:
 
     def save(self):
         self.updated_at = datetime.now()
-        key = models.storage.construct_key(self) 
         models.storage.new(self)
         models.storage.save()
 

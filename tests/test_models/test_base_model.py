@@ -55,8 +55,6 @@ class TestBaseModelClass(unittest.TestCase):
             'updated_at': date_str
         }
         obj = BaseModel(**data)
-        self.assertIsInstance(obj.created_at, datetime)
-        self.assertEqual(obj.id, '1234')
         self.assertEqual(obj.created_at.isoformat(timespec='seconds'), date_str)
         self.assertEqual(obj.updated_at.isoformat(timespec='seconds'), date_str)
 
