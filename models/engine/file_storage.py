@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import importlib
 import json
 from models.base_model import BaseModel
 
@@ -34,13 +35,27 @@ class FileStorage:
                 data = json.load(f)
                 for key, value in data.items():
                     class_name = value['__class__']
-                    cls = globals()[class_name]  # Convert class name to class reference
-                    obj = cls(**value)
-                    self.__objects[key] = obj
-            print(f"Data loaded from {self.__file_path}: {self.__objects}")
+                    cls = self.get_class_by_name(class_name)
+                    if cls:
+                        obj = cls(**value)
+                        self.__objects[key] = obj
+                    else:
+                        print(f"Class {class_name} not found.")
         except FileNotFoundError:
             print(f"{self.__file_path} not found. No data loaded.")
             pass
+        
+    def get_class_by_name(self, class_name):
+        """Dynamically fetch the class by name from models."""
+        try:
+            module_name = f"models.{class_name.lower()}"
+            module = importlib.import_module(module_name)
+
+            cls = getattr(module, class_name)
+            return cls
+        except (ModuleNotFoundError, AttributeError) as e:
+            print(f"Error loading class {class_name}: {e}")
+            return None
 
     def construct_key(self, obj):
         """ helper method to construct key for object dictionary """
