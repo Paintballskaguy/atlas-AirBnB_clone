@@ -84,6 +84,9 @@ class TestUser(unittest.TestCase):
             self.assertIn("User", content)
             self.assertIn(self.user.email, content)
 
+    def test_user_properties(self):
+        self.assertIsNotNone(self.user.email)
+
 
 if __name__ == '__main__':
     unittest.main()

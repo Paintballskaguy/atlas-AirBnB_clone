@@ -86,6 +86,5 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual(base.created_at.isoformat(timespec='seconds'), date)
         self.assertEqual(base.updated_at.isoformat(timespec='seconds'), date)
 
-
 if __name__ == '__main__':
     unittest.main()
