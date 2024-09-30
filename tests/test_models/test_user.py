@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 """Unit tests for the User class"""
 
-import unittest
+import unittest, os
 from models.user import User
 from models.engine.file_storage import FileStorage
 from datetime import datetime
-import os
 
 
 class TestUser(unittest.TestCase):
@@ -13,7 +12,6 @@ class TestUser(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        """Set up resources for all tests in the class"""
         cls.user = User()
         cls.user.email = "test@mail.com"
         cls.user.first_name = "John"
@@ -24,16 +22,13 @@ class TestUser(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        """Tear down resources after all tests in the class"""
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
 
     def setUp(self):
-        """Set up resources before each test"""
         self.user = TestUser.user
 
     def tearDown(self):
-        """Clean up resources after each test"""
         pass
 
     def test_initialization(self):
@@ -45,7 +40,6 @@ class TestUser(unittest.TestCase):
         self.assertEqual(self.user.password, "password123")
 
     def test_to_dict(self):
-        """Test the to_dict method of the User class"""
         user_dict = self.user.to_dict()
         self.assertEqual(user_dict['email'], "test@mail.com")
         self.assertEqual(user_dict['first_name'], "John")
@@ -56,14 +50,12 @@ class TestUser(unittest.TestCase):
         self.assertIn('updated_at', user_dict)
 
     def test_save(self):
-        """Test the save method updates the updated_at attribute"""
         old_updated_at = self.user.updated_at
         self.user.save()
         self.assertNotEqual(old_updated_at, self.user.updated_at)
         self.assertTrue(self.user.updated_at > old_updated_at)
 
     def test_file_storage_save_reload(self):
-        """Test that User instances are properly saved and reloaded by FileStorage"""
         my_user = User()
         my_user.first_name = "Betty"
         my_user.last_name = "Bar"
@@ -76,7 +68,6 @@ class TestUser(unittest.TestCase):
         self.assertIn(key, self.storage.all())
 
     def test_user_in_file_storage(self):
-        """Test that FileStorage correctly serializes and deserializes User"""
         self.storage.new(self.user)
         self.storage.save()
         with open(self.test_file, "r") as f:
