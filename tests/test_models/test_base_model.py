@@ -23,14 +23,14 @@ class TestBaseModelClass(unittest.TestCase):
         self.storage.__objects = {}
 """     
     def tearDown(self):
-        """Clean up after each test method runs."""
+        ##Clean up after each test method runs.
         print("Cleaning up after a test...")
         if os.path.exists(self.test_file):
             os.remove(self.test_file)
         
     @classmethod
     def tearDownClass(cls):
-        """Tear down any class-specific resources after all tests."""
+        ####Tear down any class-specific resources after all tests.
         print("Tearing down class resources for TestBaseModelClass...")
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
