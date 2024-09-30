@@ -5,6 +5,7 @@
 
 import io, os, contextlib, unittest, datetime
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 import models
 
 
@@ -15,11 +16,13 @@ class TestBaseModelClass(unittest.TestCase):
     def setUpClass(cls):
         """Set up any state specific to the test case."""
         print("Setting up class resources for TestBaseModelClass...")
-        cls.test_file = "file.json"
+        cls.storage = FileStorage()
+        cls.base = BaseModel()
 
     def setUp(self):
         """Set up any state tied to the execution of the test method."""
         print("Setting up for a test...")
+        self.storage = FileStorage()
         self.storage.__objects = {}
         """     
     def tearDown(self):
