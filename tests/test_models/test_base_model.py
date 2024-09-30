@@ -1,49 +1,10 @@
 #!/usr/bin/python3
 """ reference list of assert methods: 
-
-    assertEqual(a, b)           a == b
-    assertNotEqual(a, b)        a != b
-    assertTrue(x)               bool(x) is True
-    assertFalse(x)              bool(x) is False
-    assertIs(a, b)              a is b
-    assertIsNot(a, b)           a is not b
-    assertIsNone(x)             a is None
-    assertIsNotNone(x)          a is not None
-    assertIn(a, b)              a in b
-    assertNotIn(a, b)           a not in b
-    assertIsInstance(a, b)      isinstance(a, b)
-    assertNotIsInstance(a, b)   not isinstance(a, b)
-
-    assertAlmostEqual(a, b)     round(a-b, 7) == 0
-    assertNotAlmostEqual(a, b)  round(a-b, 7) != 0
-    assertGreater(a, b)         a > b
-    assertGreaterEqual(a, b)    a >= b
-    assertLess(a, b)            a < b
-    assertLessEqual(a, b)       a <= b
-    assertRegex(s, r)           r.search(s)
-    assertNotRegex(s, r)        not r.search(s)
-    assertCountEqual(a, b)      a and b have the same number of each
-                                element (regardless of order)
-
-    assertRaises(exc, fun, *args, **kwds)
-    assertRaisesRegex(exc, r, fun, *args, **kwds)
-    assertWarns(warn, fun, *args, **kwds)
-    assertWarnsRegex(warn, r, fun, *args, **kwds)
-    assertLogs(logger, level)
+    Common assert methods used in unittest for reference.
 """
-
 
 import io, os, contextlib, unittest, datetime
 from models.base_model import BaseModel
-# from models import storage
-
-def setUpModule():
-    test_obj = BaseModel()
-    date = test_obj.created_at
-    date_as_str = date.isoformat()
-    print(type(date))
-    print(type(date_as_str))
-    print(test_obj.created_at)
 
 
 class TestBaseModelClass(unittest.TestCase):
@@ -52,7 +13,25 @@ class TestBaseModelClass(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """Set up any state specific to the test case."""
-        cls.base = BaseModel()
+        print("Setting up class resources for TestBaseModelClass...")
+        cls.test_file = "file.json"
+
+    @classmethod
+    def tearDownClass(cls):
+        """Tear down any class-specific resources after all tests."""
+        print("Tearing down class resources for TestBaseModelClass...")
+        if os.path.exists(cls.test_file):
+            os.remove(cls.test_file)
+
+    def setUp(self):
+        """Set up any state tied to the execution of the test method."""
+        print("Setting up for a test...")
+        self.base = BaseModel()  # Create a fresh instance for each test
+
+    def tearDown(self):
+        """Clean up after each test method runs."""
+        print("Cleaning up after a test...")
+        del self.base  # Clean up instance
 
     def test_base_id(self):
         """Test if id is set on initialization"""
@@ -93,6 +72,7 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual(base.id, '1234')
         self.assertEqual(base.created_at.isoformat(), date)
         self.assertEqual(base.updated_at.isoformat(), date)
+
 
 if __name__ == '__main__':
     unittest.main()
