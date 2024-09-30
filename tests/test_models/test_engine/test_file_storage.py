@@ -13,7 +13,6 @@ class TestFileStorage(unittest.TestCase):
         """Set up once before all tests in the class."""
         print("Setting up class resources for TestFileStorage...")
         cls.storage = FileStorage()
-        cls.test_file = "file.json"
 
     @classmethod
     def tearDownClass(cls):
@@ -26,7 +25,7 @@ class TestFileStorage(unittest.TestCase):
         """Set up before each test method."""
         print("Setting up before a test...")
         self.storage = TestFileStorage.storage
-        self.storage._FileStorage__objects = {}
+        self.storage.__objects = {}
 
     def tearDown(self):
         """Tear down after each test method."""
