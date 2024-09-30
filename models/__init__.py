@@ -1,8 +1,17 @@
 #!/usr/bin/python3
 
-import models
 import models.engine.file_storage as fs
 
+valid_classes = {
+        'BaseModel',
+        'User',
+        'Amenity',
+        'City',
+        'Place',
+        'State',
+        'Review'
+        }
+"""
 model_classes = {
         'BaseModel': models.base_model.BaseModel,
         'User': models.user.User,
@@ -12,6 +21,7 @@ model_classes = {
         'State': models.state.State,
         'Review': models.review.Review
         }
+"""
 
 storage = fs.FileStorage()
 storage.reload()
