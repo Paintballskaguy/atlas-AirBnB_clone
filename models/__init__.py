@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import models
 import models.engine.file_storage as fs
 
 model_classes = {
