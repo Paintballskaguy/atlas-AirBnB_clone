@@ -20,7 +20,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         else:
-            new_obj = BaseModel()
+            new_obj = models.base_model.BaseModel()
             print(new_obj.id)
             new_obj.save()
 
@@ -32,7 +32,6 @@ class HBNBCommand(cmd.Cmd):
         else:
             print(str(instance))
 
-
     def do_destroy(self, arg):
         'delete instance given by the class name and id'
         instance = self.get_instance(arg)
@@ -41,6 +40,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             key = models.storage.construct_key(instance)
             models.storage.all().pop(key)
+            # storage save ??
 
     def do_all(self, args):
         'outputs string representations for every existing instance or for all of a class'
