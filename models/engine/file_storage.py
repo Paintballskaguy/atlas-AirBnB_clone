@@ -21,7 +21,7 @@ class FileStorage:
         with the key string <class>.<id>
         """
         key = self.construct_key(new_obj)
-        self.__objects.update({ key: new_obj })
+        self.__objects[key] = new_obj
 
     def save(self):
         """ serializes objects into a json file
