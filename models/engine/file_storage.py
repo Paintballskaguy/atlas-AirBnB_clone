@@ -42,12 +42,15 @@ class FileStorage:
                 decomp_objects = json.load(json_file)
                 for key, value in decomp_objects.items():
                     class_name = value['__class__']
-                    module = importlib.import_module(f'models.{class_name.lower()}')
+                    module_name = 'models.' + class_name.lower()
+                    module = importlib.import_module(module_name)
                     cls = getattr(module, class_name)
                     obj = cls(**value)
                     self.__objects[key] = obj
         except FileNotFoundError:
             pass
+        except ModuleNotFoundError:
+            print(f"Error: Could not find module for class {class_name}")
 
     def construct_key(self, obj):
         return type(obj).__name__ + "." + obj.id
