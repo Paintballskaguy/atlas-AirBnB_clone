@@ -40,7 +40,7 @@ class FileStorage:
                         self.__objects[key] = obj
 
         except FileNotFoundError:
-            print(f"{self.__file_path} not found. No data loaded.")
+            pass
 
     def get_class_by_name(self, class_name):
         """Dynamically fetch the class by name from models."""
