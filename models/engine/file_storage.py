@@ -14,6 +14,7 @@ class FileStorage:
     def all(self):
         """ returns a dictionary of objects
         """
+        print(f"Returning all objects from storage: {self.__objects}")
         return self.__objects
 
     def new(self, obj):
@@ -21,7 +22,9 @@ class FileStorage:
         with the key string <class>.<id>
         """
         key = self.construct_key(obj)
+        print(f"Adding object to storage: {key}")
         self.__objects[key] = obj
+        print(f"Storage after adding object: {self.__objects}")
 
     def save(self):
         """ serializes objects into a json file
