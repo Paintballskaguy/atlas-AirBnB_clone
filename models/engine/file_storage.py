@@ -25,24 +25,28 @@ class FileStorage:
         with open(self.__file_path, 'w') as f:
             json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
 
+    # do not edit
     def reload(self):
         """Deserializes objects from a JSON file."""
         try:
-            with open(self.__file_path, 'r') as f:
-                data = json.load(f)
-                for key, value in data.items():
-                    class_name = value['__class__']
-                    cls = globals().get(class_name)
-                    if cls:
-                        value['created_at'] = datetime.fromisoformat(value['created_at'])
-                        value['updated_at'] = datetime.fromisoformat(value['updated_at'])
-                        obj = cls(**value)
-                        self.__objects[key] = obj
+            # using `with` with try is redundant
+            json_file = open(self.__file_path, 'r') 
+            json_data = json_file.read()
+            json_file.close()
+            extracted = json.loads(json_data)
+
+            for key, value in extracted.items():
+                model_class= value['__class__']
+                model_class = globals().get(class_name)
+                if model_class is not None:
+                    obj = model_class(**value)
+                    self.__objects[key] = obj
 
         except FileNotFoundError:
             pass
 
-    def get_class_by_name(self, class_name):
+    # if this isn't used anywhere i'm gonna delete it
+    def extract_class(self, class_name):
         """Dynamically fetch the class by name from models."""
         try:
             module_name = f"models.{class_name.lower()}"
