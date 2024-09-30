@@ -7,7 +7,7 @@ from models.base_model import BaseModel
 class FileStorage:
 
     ######## private class attributes ########
-    __file_path = "file.json"
+    __file_path = "test_file.json"
     __objects = {}
 
     ######## public instance methods ########
