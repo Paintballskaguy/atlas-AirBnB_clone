@@ -37,57 +37,37 @@ class HBNBCommand(cmd.Cmd):
             models.storage.all().pop(key)
 
     def do_all(self, args):
+        'outputs string representations for every existing instance or for all of a class'
         obj_list = []
         if not args:
-            for key, value in models.storage.all().items():
+            for value in models.storage.all().values():
                 obj_list.append(str(value))
-            print(obj_list)
-        elif args not in models.valid_classes:
-            print("** class doesn't exist **")
-        else:
+        elif args in models.valid_classes:
             for key, value in models.storage.all().items():
                 if key.startswith(args):
                     obj_list.append(str(value))
-            print(obj_list)
+        else:
+            print("** class doesn't exist **")
+            return
+        print(obj_list)
 
     def do_update(self, arg):
         'updates the instance given by class_name and id. usage: update <class> <id> <attr> "<val>"'
+        # id, created_at, and updated_at cannot be updated and wont be passed
+        # expect only simple args : string, int, and float
         # only one attribute can be updated at a time
+        # ignore additional arguments
         # save changes to json
         # assume given <attr> is valid
         # typecast <val> accordingly 
-        # errors: 
-            # ** class name missing **
-            # ** class doesn't exist **
-            # ** instance id missing **
-            # ** no instance found **
-            # ** attribute name missing **
-            # ** value missing **
-        # ignore additional arguments
-        # id, created_at, and updated_at cannot be updated and wont be passed
-        # expect only simple args : string, int, and float
-        args = arg.split()
-        if len(args) < 1:
-            print("** class name missing**")
+        instance = self.get_instance(arg)
+        if instance is None:
             return
-        if args[0] not in models.valid_classes:
-            print("** class doesn't exist**")
+
+        attr_val = self.parse_attributes(arg)
+        if attr_val is None:
             return
-        if len(args) < 2:
-            print("** instance id missing **")
-            return
-        if isinstance is None:
-            return
-        if len(args) < 3:
-            print("** attribute name missing **")
-            return
-        if len(args) < 4:
-            print("** value missing **")
-            return
-            
-        attr_name = args[2]
-        attr_value = args[3].strip("")
-        
+
         if hasattr(instance, attr_name):
             attr_type = type(getattr(instance, attr_name))
             if attr_type is int:
@@ -97,6 +77,29 @@ class HBNBCommand(cmd.Cmd):
                 
         setattr(instance, attr_name, attr_value)
         instance.save()
+
+    def do_quit(self, arg):
+        'exit this CLI instance hbnb'
+        quit()
+
+    do_EOF = do_quit 
+
+    def emptyline(self):
+        pass
+
+    def parse_attributes(self, args):
+        'returns an touple with attribute and value'
+        args = args.split()
+        attr = args[2] if len(args) > 2 else None
+        value = args[3] if len(args) > 3 else None
+        if attr is None:
+            print('** attribute name missing **')
+            return None
+        elif value is None:
+            print('** value missing **')
+            return None
+        else:
+            return (attr, value)
 
     def get_instance(self, args):
         args = args.split()
@@ -119,15 +122,6 @@ class HBNBCommand(cmd.Cmd):
                 print('** instance not found **')
                 return None
             return instance
-
-    def do_quit(self, arg):
-        'exit this CLI instance hbnb'
-        quit()
-
-    def emptyline(self):
-        pass
- 
-    do_EOF = do_quit 
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
