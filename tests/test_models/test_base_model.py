@@ -26,12 +26,12 @@ class TestBaseModelClass(unittest.TestCase):
     def setUp(self):
         """Set up any state tied to the execution of the test method."""
         print("Setting up for a test...")
-        self.base = BaseModel()  # Create a fresh instance for each test
+        self.base = BaseModel()
 
     def tearDown(self):
         """Clean up after each test method runs."""
         print("Cleaning up after a test...")
-        del self.base  # Clean up instance
+        del self.base
 
     def test_base_id(self):
         """Test if id is set on initialization"""
@@ -51,6 +51,19 @@ class TestBaseModelClass(unittest.TestCase):
         updated_at = datetime.datetime.fromisoformat(base_dict['updated_at'])
         self.assertIsInstance(created_at, datetime.datetime)
         self.assertIsInstance(updated_at, datetime.datetime)
+
+    def test_base_model_init(self):
+        """Test BaseModel initialization from a dictionary."""
+        data = {
+            'id': '1234',
+            'created_at': '2022-10-10T10:00:00.000000',
+            'updated_at': '2022-10-10T10:00:00.000000'
+        }
+        obj = BaseModel(**data)
+        self.assertEqual(obj.id, '1234')
+        expected_date = datetime.datetime(2022, 10, 10, 10, 0, 0, 0)
+        self.assertEqual(obj.created_at, expected_date)
+        self.assertEqual(obj.updated_at, expected_date)
 
     def test_save(self):
         """Test if save method updates the updated_at field"""
