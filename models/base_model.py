@@ -28,13 +28,11 @@ class BaseModel:
             models.storage.new(self)
 
     def __str__(self):
-        # [<class name>] (<self.id>) <self.__dict__>
         obj_str = "[{}] ({}) {}"
         return obj_str.format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
         self.updated_at = datetime.now()
-        print(f"Saving object with id: {self.id} at {self.updated_at}")
         models.storage.new(self)
         models.storage.save()
 

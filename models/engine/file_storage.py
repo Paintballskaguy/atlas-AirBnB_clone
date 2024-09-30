@@ -19,13 +19,10 @@ class FileStorage:
     def new(self, obj):
         """ adds a new object to the dictionary object with the key string <class>.<id> """
         key = self.construct_key(obj)
-        print(f"Adding object to storage: {key}")
         self.__objects[key] = obj
-        print(f"Storage after adding object: {self.__objects}")
 
     def save(self):
         """ serializes objects into a json file """
-        print(f"Saving objects to {self.__file_path}")
         with open(self.__file_path, 'w') as f:
             json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
 
