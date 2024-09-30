@@ -29,20 +29,22 @@ class FileStorage:
             json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
 
     def reload(self):
-        """ deserializes string from a json file into a dictionary of objects """
+        """Deserializes objects from a JSON file."""
         try:
             with open(self.__file_path, 'r') as f:
                 data = json.load(f)
                 for key, value in data.items():
-                    
-                    cls = self.get_class_by_name(value['__class__'])
+                    class_name = value['__class__']
+                    cls = globals().get(class_name)
                     if cls:
+                        value['created_at'] = datetime.fromisoformat(value['created_at'])
+                        value['updated_at'] = datetime.fromisoformat(value['updated_at'])
                         obj = cls(**value)
                         self.__objects[key] = obj
+                    else:
+                        print(f"Error loading class {class_name}: Class not found.")
         except FileNotFoundError:
             print(f"{self.__file_path} not found. No data loaded.")
-            pass
-        
     def get_class_by_name(self, class_name):
         """Dynamically fetch the class by name from models."""
         try:
