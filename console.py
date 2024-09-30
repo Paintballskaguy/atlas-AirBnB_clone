@@ -20,9 +20,10 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         else:
-            new_obj = models.base_model.BaseModel()
-            print(new_obj.id)
+            model_class = globals().get(arg[0])
+            new_obj = model_class()
             new_obj.save()
+            print(new_obj.id)
 
     def do_show(self, args):
         'outputs representation of an instance given the class name and id'

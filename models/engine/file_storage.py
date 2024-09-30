@@ -49,7 +49,7 @@ class FileStorage:
             extracted_data = json.loads(json_data)
 
             for key, value in extracted_data.items():
-                model_class= value['__class__']
+                model_class = value['__class__']
                 model_class = globals().get(model_class)
                 if model_class is not None:
                     obj = model_class(**value)
