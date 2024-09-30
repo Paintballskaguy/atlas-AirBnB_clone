@@ -16,11 +16,11 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        elif args[0] not in models.valid_classes:
+        elif args[0] not in models.model_classes.keys():
             print("** class doesn't exist **")
             return
         else:
-            model_class = globals().get(arg[0])
+            model_class = models.model_classes.get(args[0])
             new_obj = model_class()
             new_obj.save()
             print(new_obj.id)
