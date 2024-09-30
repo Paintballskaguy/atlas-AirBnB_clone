@@ -7,16 +7,13 @@ import os
 
 
 class TestReview(unittest.TestCase):
-    """Test cases for the Review class"""
+
+    storage = FileStorage()
     
     @classmethod
     def setUpClass(cls):
         cls.review = Review()
-        cls.review.place_id = "place123"
-        cls.review.user_id = "user123"
-        cls.review.text = "Great place to stay!"
         cls.test_file = "file.json"
-        cls.storage = "file.json"
         
     @classmethod
     def tearDownClass(cls):
@@ -24,17 +21,15 @@ class TestReview(unittest.TestCase):
             os.remove(cls.test_file)
             
     def test_initialization(self):
-        """tests that review initializes correctly"""
-        self.assertEqual(self.review.place_id, "place123")
-        self.assertEqual(self.review.user_id, "user123")
-        self.assertEqual(self.review.text, "Great place to stay!")
+        self.assertEqual(self.review.place_id, "")
+        self.assertEqual(self.review.user_id, "")
+        self.assertEqual(self.review.text, "")
         
     def test_to_dict(self):
-        """"Test the to_dict method of the Review class"""
         review_dict = self.review.to_dict()
-        self.assertEqual(review_dict['place_id'], "place123")
-        self.assertEqual(review_dict['user_id'].strip(), "user123")
-        self.assertEqual(review_dict['text'], "Great place to stay!")
+        self.assertEqual(review_dict['place_id'], "")
+        self.assertEqual(review_dict['user_id'].strip(), "")
+        self.assertEqual(review_dict['text'], "")
         self.assertEqual(review_dict['__class__'], "Review")
         
 if __name__ == "__main__":
