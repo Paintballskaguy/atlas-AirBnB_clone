@@ -5,10 +5,10 @@ import io
 import os
 import contextlib
 import unittest
+import models
 from datetime import datetime
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-import models
 
 
 class TestBaseModelClass(unittest.TestCase):
@@ -58,6 +58,7 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual(obj.created_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
         self.assertEqual(obj.updated_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
 
+    # in here, test that the data in file is different after the call to save()
     def test_base_model_save(self):
         """Test that BaseModel.save() updates updated_at and stores in storage."""
         last_update = self.base.updated_at
