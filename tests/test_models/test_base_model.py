@@ -66,7 +66,7 @@ class TestBaseModelClass(unittest.TestCase):
         print("Storage contents after saving BaseModel:", self.storage.all())
         key = f"BaseModel.{self.base.id}"
         print("Expected key:", key)
-        self.assertIn(key, self.storage.all())
+        self.assertIn(key, self.storage.all().keys())
         self.assertNotEqual(last_update, new_update)
 
     def test__str__(self):
