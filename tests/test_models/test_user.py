@@ -87,7 +87,9 @@ class TestUser(unittest.TestCase):
     def test_user_properties(self):
         new_user = User()
         self.assertEqual(new_user.email, "")
-
+        self.assertEqual(new_user.password, "")
+        self.assertEqual(new_user.first_name, "")
+        self.assertEqual(new_user.last_name, "")
 
 if __name__ == '__main__':
     unittest.main()
