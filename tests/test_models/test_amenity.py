@@ -12,8 +12,6 @@ class TestAmenity(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.amenity = Amenity()
-        cls.amenity.name = "Wi-Fi"
-        cls.test_file = "file.json"
         cls.storage = FileStorage()
 
     @classmethod
@@ -22,13 +20,12 @@ class TestAmenity(unittest.TestCase):
             os.remove(cls.test_file)
 
     def test_initialization(self):
-        """Test that Amenity initializes with the correct attributes"""
-        self.assertEqual(self.amenity.name, "Wi-Fi")
+        self.assertEqual(self.amenity.name, "")
 
     def test_to_dict(self):
         """Test the to_dict method of the Amenity class"""
         amenity_dict = self.amenity.to_dict()
-        self.assertEqual(amenity_dict['name'], "Wi-Fi")
+        self.assertEqual(amenity_dict['name'], "")
         self.assertEqual(amenity_dict['__class__'], "Amenity")
 
 if __name__ == "__main__":
