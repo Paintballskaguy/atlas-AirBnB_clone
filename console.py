@@ -40,7 +40,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             key = models.storage.construct_key(instance)
             models.storage.all().pop(key)
-            # storage save ??
+            models.storage.save()
 
     def do_all(self, args):
         'outputs string representations for every existing instance or for all of a class'
@@ -59,19 +59,20 @@ class HBNBCommand(cmd.Cmd):
 
     def do_update(self, arg):
         'updates the instance given by class_name and id. usage: update <class> <id> <attr> "<val>"'
-        # id, created_at, and updated_at cannot be updated and wont be passed
+        # assume given <attr> is valid
+        # typecast <val> accordingly 
         # expect only simple args : string, int, and float
         # only one attribute can be updated at a time
         # ignore additional arguments
         # save changes to json
-        # assume given <attr> is valid
-        # typecast <val> accordingly 
         instance = self.get_instance(arg)
         if instance is None:
             return
 
         attr_val = self.parse_attributes(arg)
         if attr_val is None:
+            return
+        if attr_val[0] in ('id', 'created_at', 'updated_at'):
             return
 
         if hasattr(instance, attr_name):
@@ -80,7 +81,7 @@ class HBNBCommand(cmd.Cmd):
                 attr_value = int(attr_value)
             elif attr_type is float:
                 attr_value = float(attr_value)
-                
+
         setattr(instance, attr_name, attr_value)
         instance.save()
 
