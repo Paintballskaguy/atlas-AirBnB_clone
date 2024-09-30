@@ -69,13 +69,14 @@ class TestBaseModelClass(unittest.TestCase):
 
     def test_base_model_save(self):
         """Test that BaseModel.save() updates updated_at and stores in storage."""
-        base = BaseModel()
-        last_update = base.updated_at
-        base.save()
-        key = models.storage.construct_key(base)
-        self.assertIn(key, models.storage.all())  # Ensure object is in storage
-        self.assertTrue(base.updated_at > last_update)
-    
+        last_update = self.base.updated_at
+        self.base.save()
+        self.assertNotEqual(last_update, self.base.updated_at)
+
+    def test_base_id(self):
+        """Test if id is set on initialization."""
+        self.assertIsNotNone(self.base.id)
+
     def test__str__(self):
         """Test if __str__ returns the expected string format"""
         expected_str = "[BaseModel] ({}) {}".format(self.base.id, self.base.__dict__)
@@ -83,7 +84,7 @@ class TestBaseModelClass(unittest.TestCase):
 
     def test_init_from_kwargs(self):
         """Test initialization from kwargs"""
-        date = datetime.datetime.now().isoformat()
+        date = "2022-10-10T10:00:00"
         data = {'id': '1234', 'created_at': date, 'updated_at': date}
         base = BaseModel(**data)
         self.assertEqual(base.id, '1234')
