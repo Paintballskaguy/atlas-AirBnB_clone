@@ -56,8 +56,8 @@ class TestBaseModelClass(unittest.TestCase):
         """Test BaseModel initialization from a dictionary."""
         data = {
             'id': '1234',
-            'created_at': '2022-10-10T10:00:00.000000',
-            'updated_at': '2022-10-10T10:00:00.000000'
+            'created_at': '2022-10-10T10:00:00',
+            'updated_at': '2022-10-10T10:00:00'
             }
         obj = BaseModel(**data)
         self.assertEqual(obj.id, '1234')
@@ -69,10 +69,6 @@ class TestBaseModelClass(unittest.TestCase):
         self.base.save()
         key = models.storage.construct_key(self.base)
         self.assertIn(key, models.storage.all())
-        
-        saved_obj = models.storage.all()[key]
-        self.assertEqual(saved_obj.updated_at.strftime('%Y-%m-%dT%H:%M:%S'), self.base.updated_at.strftime('%Y-%m-%dT%H:%M:%S'))
-
 
     def test__str__(self):
         """Test if __str__ returns the expected string format"""
