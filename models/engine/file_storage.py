@@ -42,7 +42,7 @@ class FileStorage:
                 decomp_objects = json.load(json_file)
                 for key, value in decomp_objects.items():
                     class_name = value['__class__']
-                    module = importlib.import_module('models.' + class_name.lower())
+                    module = importlib.import_module(f'models.{class_name.lower()}')
                     cls = getattr(module, class_name)
                     obj = cls(**value)
                     self.__objects[key] = obj
