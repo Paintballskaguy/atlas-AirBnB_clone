@@ -23,11 +23,12 @@ class TestFileStorage(unittest.TestCase):
             os.remove(cls.test_file)
 
     def setUp(self):
-        """Set up before each test method."""
+        """Set up any state tied to the execution of the test method."""
         print("Setting up before a test...")
-        self.storage = TestFileStorage.storage
-        self.storage.__objects = {}
-
+        self.storage = FileStorage()
+        self.base = BaseModel()  # Initialize the BaseModel instance for testing
+        self.test_file = "test_file.json"
+    
     def tearDown(self):
         """Tear down after each test method."""
         print("Tearing down after a test...")

@@ -29,34 +29,21 @@ class FileStorage:
     def save(self):
         """ serializes objects into a json file
         """
-        with open(self.__file_path, 'w') as json_file:
-            obj_dict = {k: v.to_dict() for k, v in self.__objects.items()}
-            json.dump(obj_dict, json_file)
+        with open(self.test_file, 'w') as f:
+            json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
 
     def reload(self):
         """ deserializes string from a json file into
         a dictionary of objects
         """
         try: 
-            with open(self.__file_path, 'r') as json_file:
-                decomp_objects = json.load(json_file)
-                for key, value in decomp_objects.items():
+            with open(self.test_file, 'r') as f:
+                data = json.load(f)
+                for key, value in data.items():
                     class_name = value['__class__']
-                    if class_name == "BaseModel":
-                        obj = BaseModel(**value)
-                    else:
-                        module_name = 'models.' + class_name.lower()
-                        try:
-                                module = importlib.import_module(module_name)
-                                cls = getattr(module, class_name)
-                                obj = cls(**value)
-                        except ModuleNotFoundError:
-                            print(f"Error: Could not find module for class {class_name}")
-                            continue
-                        except AttributeError:
-                            print(f"Error: Could not find class {class_name}")
-                            continue
-                self.__objects[key] = obj
+                    cls = globals()[class_name]
+                    obj = cls(**value)
+                    self.__objects[key] = obj
         except FileNotFoundError:
             pass
 
