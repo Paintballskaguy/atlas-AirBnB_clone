@@ -62,10 +62,12 @@ class TestBaseModelClass(unittest.TestCase):
         """Test that BaseModel.save() updates updated_at and stores in storage."""
         last_update = self.base.updated_at
         self.base.save()
+        new_update = self.base.updated_at
         print("Storage contents after saving BaseModel:", self.storage.all())
         key = f"BaseModel.{self.base.id}"
         print("Expected key:", key)
         self.assertIn(key, self.storage.all())
+        self.assertNotEqual(last_update, new_update)
 
     def test__str__(self):
         """Test if __str__ returns the expected string format."""
