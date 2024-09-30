@@ -64,12 +64,15 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertEqual(obj.created_at, expected_date)
         self.assertEqual(obj.updated_at, expected_date)
 
-    def test_save(self):
-        """Test if save method updates the updated_at field"""
-        last_update = self.base.updated_at
-        self.base.save()
-        self.assertNotEqual(last_update, self.base.updated_at)
-        self.assertTrue(self.base.updated_at > last_update)
+    def test_base_model_save(self):
+        """Test that BaseModel.save() updates updated_at and stores in storage."""
+        obj = BaseModel()
+        old_updated_at = obj.updated_at
+        obj.save()
+        self.assertNotEqual(old_updated_at, obj.updated_at)
+        key = f"BaseModel.{obj.id}"
+        self.assertIn(key, models.storage.all())
+
 
     def test__str__(self):
         """Test if __str__ returns the expected string format"""
