@@ -24,14 +24,14 @@ class TestFileStorage(unittest.TestCase):
 
     def setUp(self):
         """Set up any state tied to the execution of the test method."""
-        print("Setting up before a test...")
         self.storage = FileStorage()
-        self.base = BaseModel()  # Initialize the BaseModel instance for testing
+        self.base = BaseModel()
+        FileStorage._FileStorage__objects = {}
         self.test_file = "test_file.json"
     
     def tearDown(self):
         """Tear down after each test method."""
-        print("Tearing down after a test...")
+        FileStorage._FileStorage__objects = {}
         self.storage._FileStorage__objects = {}
 
     def test_file_path(self):
@@ -57,7 +57,7 @@ class TestFileStorage(unittest.TestCase):
     def test_save(self):
         """Test that save() creates the file and stores serialized objects."""
         self.storage.save()
-        self.assertTrue(os.path.exists(self.test_file))
+        self.assertTrue(os.path.exists(self.storage._FileStorage__file_path))
 
     def test_reload(self):
         """Test that reload() restores objects from file."""

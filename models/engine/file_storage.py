@@ -34,13 +34,11 @@ class FileStorage:
             with open(self.__file_path, 'r') as f:
                 data = json.load(f)
                 for key, value in data.items():
-                    class_name = value['__class__']
-                    cls = self.get_class_by_name(class_name)
+                    
+                    cls = self.get_class_by_name(value['__class__'])
                     if cls:
                         obj = cls(**value)
                         self.__objects[key] = obj
-                    else:
-                        print(f"Class {class_name} not found.")
         except FileNotFoundError:
             print(f"{self.__file_path} not found. No data loaded.")
             pass
