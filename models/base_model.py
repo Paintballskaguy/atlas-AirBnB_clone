@@ -33,7 +33,8 @@ class BaseModel:
         return obj_str.format(type(self).__name__, self.id, self.__dict__)
 
     def save(self):
-        self.updated_at = datetime.now()
+        key = models.storage.construct_key(self)
+        models.storage.all().get(key).updated_at = datetime.now()
         models.storage.save()
 
     def to_dict(self):
