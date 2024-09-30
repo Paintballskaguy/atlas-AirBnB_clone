@@ -4,6 +4,7 @@ which imports and customize the cmd.Cmd class
 """
 
 import cmd, models
+import models.base_model.BaseModel as BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """ our reimplementation of cmd.Cmd
@@ -20,7 +21,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         else:
-            model_class = models.base_model.BaseModel
+            model_class = BaseModel
             new_obj = model_class()
             new_obj.save()
             print(new_obj.id)
