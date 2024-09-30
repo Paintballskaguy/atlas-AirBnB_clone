@@ -22,6 +22,7 @@ model_classes = {
         'Review': Review
         }
 
+# DO NOT EDIT -- chepe
 class HBNBCommand(cmd.Cmd):
     """ our reimplementation of cmd.Cmd
     """
