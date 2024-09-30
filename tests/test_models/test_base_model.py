@@ -17,23 +17,24 @@ class TestBaseModelClass(unittest.TestCase):
         print("Setting up class resources for TestBaseModelClass...")
         cls.test_file = "file.json"
 
+    def setUp(self):
+        """Set up any state tied to the execution of the test method."""
+        print("Setting up for a test...")
+        self.storage.__objects = {}
+"""     
+    def tearDown(self):
+        """Clean up after each test method runs."""
+        print("Cleaning up after a test...")
+        if os.path.exists(self.test_file):
+            os.remove(self.test_file)
+        
     @classmethod
     def tearDownClass(cls):
         """Tear down any class-specific resources after all tests."""
         print("Tearing down class resources for TestBaseModelClass...")
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
-
-    def setUp(self):
-        """Set up any state tied to the execution of the test method."""
-        print("Setting up for a test...")
-        self.base = BaseModel()
-
-    def tearDown(self):
-        """Clean up after each test method runs."""
-        print("Cleaning up after a test...")
-        del self.base
-
+"""
     def test_base_id(self):
         """Test if id is set on initialization"""
         self.assertIsNotNone(self.base.id)
