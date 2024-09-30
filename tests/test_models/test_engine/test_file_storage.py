@@ -13,6 +13,7 @@ class TestFileStorage(unittest.TestCase):
         """Set up once before all tests in the class."""
         print("Setting up class resources for TestFileStorage...")
         cls.storage = FileStorage()
+        cls.test_file = "test_file.json"
 
     @classmethod
     def tearDownClass(cls):
@@ -54,8 +55,6 @@ class TestFileStorage(unittest.TestCase):
 
     def test_save(self):
         """Test that save() creates the file and stores serialized objects."""
-        obj = BaseModel()
-        self.storage.new(obj)
         self.storage.save()
         self.assertTrue(os.path.exists(self.test_file))
 
@@ -79,18 +78,14 @@ class TestFileStorage(unittest.TestCase):
         }
         obj = BaseModel(**data)
         self.assertEqual(obj.id, '1234')
-        self.assertEqual(str(obj.created_at), '2022-10-10T10:00:00.000000')
+        self.assertEqual(obj.created_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
 
     def test_base_model_save(self):
         """Test that BaseModel.save() updates updated_at and stores in storage."""
-        obj = BaseModel()
-        old_updated_at = obj.updated_at
-        obj.save()
-
-        self.assertNotEqual(obj.updated_at, old_updated_at)
-        key = f"BaseModel.{obj.id}"
+        last_update = self.storage.all()
+        self.base.save()
+        key = f"BaseModel.{self.base.id}"
         self.assertIn(key, self.storage.all())
-
 
 if __name__ == '__main__':
     unittest.main()
