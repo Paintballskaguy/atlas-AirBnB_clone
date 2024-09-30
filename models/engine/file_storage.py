@@ -16,23 +16,19 @@ class FileStorage:
         """
         return self.__objects
 
-    def new(self, new_obj):
+    def new(self, obj):
         """ adds a new object to the dictionary object
         with the key string <class>.<id>
         """
-        key = self.construct_key(new_obj)
-        self.__objects[key] = new_obj
+        key = self.construct_key(obj)
+        self.__objects[key] = obj
 
     def save(self):
         """ serializes objects into a json file
         """
-        decomp_objects = {}
-        for key, obj in self.__objects.items():
-            obj_dict = obj.to_dict()
-            decomp_objects[key] = obj_dict
-
         with open(self.__file_path, 'w') as json_file:
-            json.dump(decomp_objects, json_file)
+            obj_dict = {k: v.to_dict() for k, v in self.__objects.items()}
+            json.dump(obj_dict, json_file)
 
     def reload(self):
         """ deserializes string from a json file into
