@@ -14,19 +14,15 @@ from models.engine.file_storage import FileStorage
 class TestBaseModelClass(unittest.TestCase):
     """Class containing testing functions for BaseModel."""
 
-    @classmethod
-    def setUpClass(cls):
-        """Set up any state specific to the test case."""
-        print("Setting up class resources for TestBaseModelClass...")
-        cls.storage = FileStorage()
-        cls.base = BaseModel()
+    storage = FileStorage()
 
     def setUp(self):
-        """Set up any state tied to the execution of the test method."""
-        print("Setting up for a test...")
-        self.storage = FileStorage()
-        self.storage.__objects = {}
         self.base = BaseModel()
+
+    def tearDown(self):
+        """Set up any state tied to the execution of the test method."""
+        self.storage.__objects.clear()
+        del self.base
 
     def test_base_id_is_set(self):
         """Test if id is set on initialization."""
@@ -61,14 +57,20 @@ class TestBaseModelClass(unittest.TestCase):
     # in here, test that the data in file is different after the call to save()
     def test_base_model_save(self):
         """Test that BaseModel.save() updates updated_at and stores in storage."""
+
         last_update = self.base.updated_at
+        storage.reload()
+        old_storage = storage.all().items()
+
         self.base.save()
+
         new_update = self.base.updated_at
-        print("Storage contents after saving BaseModel:", self.storage.all())
-        key = f"BaseModel.{self.base.id}"
-        print("Expected key:", key)
-        self.assertIn(key, self.storage.all().keys())
+        storage.reload()
+        new_storage = storage.all().items()
+
         self.assertNotEqual(last_update, new_update)
+        self.assertNotEqual(old_storage, new_storage)
+        self.assertIn(key, self.storage.all().keys())
 
     def test__str__(self):
         """Test if __str__ returns the expected string format."""
