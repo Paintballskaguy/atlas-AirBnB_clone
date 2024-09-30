@@ -4,7 +4,7 @@ which imports and customize the cmd.Cmd class
 """
 
 import cmd, models
-import models.base_model.BaseModel as BaseModel
+from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """ our reimplementation of cmd.Cmd
