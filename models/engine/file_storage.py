@@ -38,8 +38,7 @@ class FileStorage:
                         value['updated_at'] = datetime.fromisoformat(value['updated_at'])
                         obj = cls(**value)
                         self.__objects[key] = obj
-                    else:
-                        print(f"Error loading class {class_name}: Class not found.")
+
         except FileNotFoundError:
             print(f"{self.__file_path} not found. No data loaded.")
 
