@@ -5,6 +5,7 @@ import json
 from models.base_model import BaseModel
 from datetime import datetime
 
+# DO NOT EDIT -- chepe
 class FileStorage:
     ######## private class attributes ########
     __file_path = "file.json"
