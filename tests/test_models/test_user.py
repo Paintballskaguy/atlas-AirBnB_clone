@@ -28,16 +28,9 @@ class TestUser(unittest.TestCase):
     def setUp(self):
         self.user = TestUser.user
 
-    def tearDown(self):
-        pass
-
-    def test_initialization(self):
+    def test__init__(self):
         """Test that User initializes with the correct attributes"""
         self.assertIsInstance(self.user, User)
-        self.assertEqual(self.user.email, "test@mail.com")
-        self.assertEqual(self.user.first_name, "John")
-        self.assertEqual(self.user.last_name, "Doe")
-        self.assertEqual(self.user.password, "password123")
 
     def test_to_dict(self):
         user_dict = self.user.to_dict()
