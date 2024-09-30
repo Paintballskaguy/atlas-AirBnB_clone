@@ -125,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
             key = class_name + "." + id_num
             instance = models.storage.all().get(key)  
             if instance is None: 
-                print('** instance not found **')
+                print('** no instance found **')
                 return None
             return instance
 
