@@ -5,6 +5,12 @@ which imports and customize the cmd.Cmd class
 
 import cmd, models
 from models.base_model import BaseModel
+from models.user import User
+
+model_classes = {
+        'BaseModel': BaseModel,
+        'User': User
+        }
 
 class HBNBCommand(cmd.Cmd):
     """ our reimplementation of cmd.Cmd
@@ -17,11 +23,11 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        elif args[0] not in models.valid_classes:
+        elif args[0] not in models.model_classes.keys():
             print("** class doesn't exist **")
             return
         else:
-            model_class = BaseModel
+            model_class = model_classes.get(args[0])
             new_obj = model_class()
             new_obj.save()
             print(new_obj.id)
