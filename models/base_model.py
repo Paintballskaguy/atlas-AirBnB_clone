@@ -37,7 +37,7 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        obj_dict = self.__dict__
+        obj_dict = self.__dict__.copy()
         obj_dict.update({
             '__class__': self.__class__.__name__,
             'id': self.id,
