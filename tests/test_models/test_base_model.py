@@ -46,7 +46,6 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertIsInstance(base_dict['created_at'], str)
         self.assertIsInstance(base_dict['updated_at'], str)
 
-        # Check if datetime fields are in ISO format
         created_at = datetime.datetime.fromisoformat(base_dict['created_at'])
         updated_at = datetime.datetime.fromisoformat(base_dict['updated_at'])
         self.assertIsInstance(created_at, datetime.datetime)
@@ -58,7 +57,7 @@ class TestBaseModelClass(unittest.TestCase):
             'id': '1234',
             'created_at': '2022-10-10T10:00:00.000000',
             'updated_at': '2022-10-10T10:00:00.000000'
-        }
+            }
         obj = BaseModel(**data)
         self.assertEqual(obj.id, '1234')
         expected_date = datetime.datetime(2022, 10, 10, 10, 0, 0, 0)
