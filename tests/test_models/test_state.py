@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 
-import unittest
+import unittest, os
 from models.state import State
 from models.engine.file_storage import FileStorage
-import os
 
 class TestState(unittest.TestCase):
     """Test cases for the State class"""

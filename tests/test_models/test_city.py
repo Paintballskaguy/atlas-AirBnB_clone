@@ -7,7 +7,6 @@ import os
 
 
 class TestCity(unittest.TestCase):
-    """Test cases for the City class"""
 
     @classmethod
     def setUpClass(cls):
@@ -23,12 +22,11 @@ class TestCity(unittest.TestCase):
             os.remove(cls.test_file)
 
     def test_initialization(self):
-        """Test that City initializes with the correct attributes"""
-        self.assertEqual(self.city.name, "San Francisco")
-        self.assertEqual(self.city.state_id, "state123")
+        new_city = City()
+        self.assertEqual(self.city.name, "")
+        self.assertEqual(self.city.state_id, "")
 
     def test_to_dict(self):
-        """Test the to_dict method of the City class"""
         city_dict = self.city.to_dict()
         self.assertEqual(city_dict['name'], "San Francisco")
         self.assertEqual(city_dict['state_id'], "state123")
