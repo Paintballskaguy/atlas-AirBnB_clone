@@ -12,11 +12,17 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         'creates a new instance of BaseModel'
-        # save to json_file
-        # print id
-        # if class name is missing print: ** class name missing **
-        # if class name doesnt exist print: ** class doesn't exist **
-        pass
+        args = arg.split()
+        if len(args) == 0:
+            print("** class name missing **")
+            return
+        elif args[0] not in models.valid_classes:
+            print("** class doesn't exist **")
+            return
+        else:
+            new_obj = BaseModel()
+            print(new_obj.id)
+            new_obj.save()
 
     def do_show(self, args):
         'outputs representation of an instance given the class name and id'
@@ -24,7 +30,7 @@ class HBNBCommand(cmd.Cmd):
         if instance is None:
             return
         else:
-            print(instance)
+            print(str(instance))
 
 
     def do_destroy(self, arg):
