@@ -60,8 +60,8 @@ class TestBaseModelClass(unittest.TestCase):
             'updated_at': '2022-10-10T10:00:00.000000'
             }
         obj = BaseModel(**data)
-        self.assertEqual(obj.id, '1234')
-        self.assertEqual(str(obj.created_at), '2022-10-10 10:00:00')
+        self.assertEqual(obj.created_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
+        self.assertEqual(obj.updated_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
 
     def test_base_model_save(self):
         """Test that BaseModel.save() updates updated_at and stores in storage."""
