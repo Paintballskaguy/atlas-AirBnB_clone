@@ -13,7 +13,6 @@ class FileStorage:
     ######## public instance methods ########
     def all(self):
         """ returns a dictionary of objects """
-        print(f"Returning all objects from storage: {self.__objects}")
         return self.__objects
 
     def new(self, obj):
