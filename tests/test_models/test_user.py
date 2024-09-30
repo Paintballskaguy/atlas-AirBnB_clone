@@ -85,9 +85,8 @@ class TestUser(unittest.TestCase):
             self.assertIn(self.user.email, content)
 
     def test_user_properties(self):
-        old_email = self.user.email
-        self.user.email = "throwaway@doesntexist.com"
-        self.assertNotEqual(old_email, self.user.email)
+        new_user = User()
+        self.assertEqual(new_user.email, "")
 
 
 if __name__ == '__main__':
