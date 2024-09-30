@@ -54,8 +54,8 @@ class TestBaseModelClass(unittest.TestCase):
 
         created_at = datetime.fromisoformat(base_dict['created_at'])
         updated_at = datetime.fromisoformat(base_dict['updated_at'])
-        self.assertIsInstance(created_at, datetime.datetime)
-        self.assertIsInstance(updated_at, datetime.datetime)
+        self.assertIsInstance(created_at, datetime)
+        self.assertIsInstance(updated_at, datetime)
 
     def test_base_model_init(self):
         """Test BaseModel initialization from a dictionary."""
@@ -65,6 +65,7 @@ class TestBaseModelClass(unittest.TestCase):
             'updated_at': datetime
             }
         obj = BaseModel(**data)
+        self.assertEqual(obj.id, '1234')
         self.assertEqual(obj.created_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
         self.assertEqual(obj.updated_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
 

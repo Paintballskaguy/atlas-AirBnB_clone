@@ -12,10 +12,15 @@ class BaseModel:
             self.id = kwargs.get('id', str(uuid4()))
             created_at = kwargs.get('created_at', datetime.now().isoformat())
             updated_at = kwargs.get('updated_at', datetime.now().isoformat())
-            if isinstance(created_at, str):
+            if created_at:
                 self.created_at = datetime.fromisoformat(created_at)
-            if isinstance(updated_at, str):
+            else:
+                self.created_at = datetime.now()
+        
+            if updated_at:
                 self.updated_at = datetime.fromisoformat(updated_at)
+            else:
+                self.updated_at = datetime.now()
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
