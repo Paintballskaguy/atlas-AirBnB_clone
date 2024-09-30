@@ -23,7 +23,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        elif args[0] not in models.model_classes.keys():
+        elif args[0] not in model_classes.keys():
             print("** class doesn't exist **")
             return
         else:
