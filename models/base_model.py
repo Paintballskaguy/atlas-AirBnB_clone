@@ -8,10 +8,10 @@ from uuid import uuid4
 class BaseModel: 
 
     def __init__(self, *args, **kwargs):
-        if len(kwargs) > 0:
-            self.id = kwargs.get('id')
-            created_at = kwargs.get('created_at')
-            updated_at = kwargs.get('updated_at')
+        if kwargs:
+            self.id = kwargs.get('id', str(uuid4()))
+            created_at = kwargs.get('created_at', datetime.now().isoformat())
+            updated_at = kwargs.get('updated_at' datetime.now().isoformat())
             self.created_at = datetime.fromisoformat(created_at)
             self.updated_at = datetime.fromisoformat(updated_at)
         else:
