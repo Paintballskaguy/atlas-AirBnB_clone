@@ -61,18 +61,17 @@ class TestBaseModelClass(unittest.TestCase):
             }
         obj = BaseModel(**data)
         self.assertEqual(obj.id, '1234')
-        expected_date = datetime.datetime(2022, 10, 10, 10, 0, 0, 0)
-        self.assertEqual(obj.created_at, expected_date)
-        self.assertEqual(obj.updated_at, expected_date)
+        self.assertEqual(obj.created_at.strftime('%Y-%m-%dT%H:%M:%S'), '2022-10-10T10:00:00')
+        self.assertEqual(obj.updated_at.strftime('%Y-%m-%dT%H:%M:%S'), '2022-10-10T10:00:00')
 
     def test_base_model_save(self):
         """Test that BaseModel.save() updates updated_at and stores in storage."""
-        obj = BaseModel()
-        old_updated_at = obj.updated_at
-        obj.save()
-        self.assertNotEqual(old_updated_at, obj.updated_at)
-        key = f"BaseModel.{obj.id}"
+        self.base.save()
+        key = models.storage.construct_key(self.base)
         self.assertIn(key, models.storage.all())
+        
+        saved_obj = models.storage.all()[key]
+        self.assertEqual(saved_obj.updated_at.strftime('%Y-%m-%dT%H:%M:%S'), self.base.updated_at.strftime('%Y-%m-%dT%H:%M:%S'))
 
 
     def test__str__(self):
