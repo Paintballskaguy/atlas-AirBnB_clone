@@ -5,6 +5,7 @@
 
 import io, os, contextlib, unittest, datetime
 from models.base_model import BaseModel
+import models
 
 
 class TestBaseModelClass(unittest.TestCase):
