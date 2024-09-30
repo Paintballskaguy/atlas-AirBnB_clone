@@ -25,11 +25,11 @@ class FileStorage:
         with open(self.__file_path, 'w') as f:
             json.dump({k: v.to_dict() for k, v in self.__objects.items()}, f)
 
-    # do not edit
+    # DO NOT EDIT
+    # using `with` with try is redundant
     def reload(self):
         """Deserializes objects from a JSON file."""
         try:
-            # using `with` with try is redundant
             json_file = open(self.__file_path, 'r') 
             json_data = json_file.read()
             json_file.close()
@@ -44,19 +44,6 @@ class FileStorage:
 
         except FileNotFoundError:
             pass
-
-    # if this isn't used anywhere i'm gonna delete it
-    def extract_class(self, class_name):
-        """Dynamically fetch the class by name from models."""
-        try:
-            module_name = f"models.{class_name.lower()}"
-            module = importlib.import_module(module_name)
-
-            cls = getattr(module, class_name)
-            return cls
-        except (ModuleNotFoundError, AttributeError) as e:
-            print(f"Error loading class {class_name}: {e}")
-            return None
 
     def construct_key(self, obj):
         """ helper method to construct key for object dictionary """
