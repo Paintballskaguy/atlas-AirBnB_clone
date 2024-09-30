@@ -85,7 +85,9 @@ class TestUser(unittest.TestCase):
             self.assertIn(self.user.email, content)
 
     def test_user_properties(self):
-        self.assertIsNotNone(self.user.email)
+        old_email = self.user.email
+        self.user.email = "throwaway@doesntexist.com"
+        self.assertNotEqual(old_email, self.user.email)
 
 
 if __name__ == '__main__':
