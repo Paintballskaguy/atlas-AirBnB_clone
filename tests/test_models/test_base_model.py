@@ -21,7 +21,7 @@ class TestBaseModelClass(unittest.TestCase):
         """Set up any state tied to the execution of the test method."""
         print("Setting up for a test...")
         self.storage.__objects = {}
-"""     
+        """     
     def tearDown(self):
         ##Clean up after each test method runs.
         print("Cleaning up after a test...")
@@ -34,7 +34,7 @@ class TestBaseModelClass(unittest.TestCase):
         print("Tearing down class resources for TestBaseModelClass...")
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
-"""
+        """
     def test_base_id(self):
         """Test if id is set on initialization"""
         self.assertIsNotNone(self.base.id)
