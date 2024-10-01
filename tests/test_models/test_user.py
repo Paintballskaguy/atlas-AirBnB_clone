@@ -20,11 +20,9 @@ class TestUser(unittest.TestCase):
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
 
-    def setUp(self):
-        self.user = TestUser.user
-
-    def test_user_properties(self):
+    def test_user__init__(self):
         new_user = User()
+        self.assertIsInstance(new_user, User)
         self.assertEqual(new_user.email, "")
         self.assertEqual(new_user.password, "")
         self.assertEqual(new_user.first_name, "")
