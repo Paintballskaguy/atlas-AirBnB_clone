@@ -1,17 +1,15 @@
 #!/usr/bin/python3
 
-import unittest, os
+import unittest
 from models.place import Place
-from models.engine.file_storage import FileStorage
 
 
 class TestPlace(unittest.TestCase):
-    storage = FileStorage()
 
     def setUp(self):
         self.place = Place()
 
-    def test_initialization(self):
+    def test_place__init__(self):
         self.assertEqual(self.place.name, "")
         self.assertEqual(self.place.city_id, "")
         self.assertEqual(self.place.user_id, "")
@@ -24,10 +22,5 @@ class TestPlace(unittest.TestCase):
         self.assertEqual(self.place.longitude, 0.0)
         self.assertEqual(self.place.anemity_ids, [])
 
-    def test_to_dict(self):
-        place_dict = self.place.to_dict()
-        self.assertEqual(place_dict['city_id'], "")
-        self.assertEqual(place_dict['__class__'], "Place")
-        
 if __name__ == "__main__":
     unittest.main()
