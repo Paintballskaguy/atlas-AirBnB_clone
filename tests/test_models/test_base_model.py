@@ -51,5 +51,12 @@ class TestBaseModel(unittest.TestCase):
         new_update = base_obj.updated_at
         self.assertNotEqual(last_update, new_update)
 
+    def test_base_storage_save(self):
+        old_state = self.storage.all().copy
+        base_obj = BaseModel()
+        base_obj.save()
+        new_state = self.storage.all()
+        self.assertNotEqual(old_state, new_state)
+
 if __name__ == '__main__':
     unittest.main()
