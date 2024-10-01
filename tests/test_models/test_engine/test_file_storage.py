@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import unittest, os, copy
+import unittest, os
 from datetime import datetime
 from uuid import uuid4
 from models.engine.file_storage import FileStorage
@@ -8,15 +8,15 @@ from models.base_model import BaseModel
 
 class TestFileStorage(unittest.TestCase):
     """ working comment:
-    public instance methods:
-        save(self) 
-            json serializes __objects into a __file_path
-            check state of __file_path before and after
-        reload(self)
-            deserializes __file_path into __objects
-            check state of __objects before and after
-        construct_key(self, obj)
-            returns a key_string
+
+    save(self) 
+        json serializes __objects into a __file_path
+        check state of __file_path before and after
+
+    reload(self)
+        deserializes __file_path into __objects
+        check state of __objects before and after
+
     check how this is integrated into BaseModel
         __init__ calls FileStorage.new(obj)
         save calls FileStorage.save()
@@ -24,15 +24,15 @@ class TestFileStorage(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        if os.path.exists("file.json"):
-            os.remove("file.json")
         cls.storage = FileStorage()
-        cls.test_file = "test_file.json"
+        cls.json_file = "file.json"
+        if os.path.exists(cls.json_file):
+            os.remove(cls.json_file)
 
     @classmethod
     def tearDownClass(cls):
-        if os.path.exists(cls.test_file):
-            os.remove(cls.test_file)
+        if os.path.exists(cls.json_file):
+            os.remove(cls.json_file)
 
     def test_fs_properties(self):
         self.assertEqual(self.storage._FileStorage__file_path, "file.json")
@@ -60,7 +60,13 @@ class TestFileStorage(unittest.TestCase):
         self.assertTrue(os.path.exists(self.storage._FileStorage__file_path))
 
     def test_fs_reload(self):
-        pass
+        self.storage.all().clear()
+        old_state = self.storage.all()
+        new = BaseModel()
+        new.save()
+        self.storage.reload()
+        new_state = self.storage.all()
+        self.assertNotEqual(new_state, old_state)
 
     """
     def test_fs_construct_key(self):
