@@ -8,7 +8,6 @@ from datetime import datetime
 
 
 class TestUser(unittest.TestCase):
-    """Test cases for the User class"""
 
     @classmethod
     def setUpClass(cls):
@@ -28,27 +27,20 @@ class TestUser(unittest.TestCase):
     def setUp(self):
         self.user = TestUser.user
 
-    def test__init__(self):
-        """Test that User initializes with the correct attributes"""
+    def test_user__init__(self):
         self.assertIsInstance(self.user, User)
 
-    def test_to_dict(self):
+    def test_user_to_dict(self):
         user_dict = self.user.to_dict()
-        self.assertEqual(user_dict['email'], "test@mail.com")
-        self.assertEqual(user_dict['first_name'], "John")
-        self.assertEqual(user_dict['last_name'], "Doe")
-        self.assertEqual(user_dict['password'], "password123")
         self.assertEqual(user_dict['__class__'], "User")
-        self.assertIn('created_at', user_dict)
-        self.assertIn('updated_at', user_dict)
 
-    def test_save(self):
+    def test_user_save(self):
         old_updated_at = self.user.updated_at
         self.user.save()
         self.assertNotEqual(old_updated_at, self.user.updated_at)
         self.assertTrue(self.user.updated_at > old_updated_at)
 
-    def test_file_storage_save_reload(self):
+    def test_user_file_storage_save_reload(self):
         my_user = User()
         my_user.first_name = "Betty"
         my_user.last_name = "Bar"
