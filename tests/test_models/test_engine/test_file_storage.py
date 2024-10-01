@@ -71,7 +71,7 @@ class TestFileStorage(unittest.TestCase):
         new.save()
 
         old_state = self.storage.all().keys()
-        old_state = old_state.copy()
+        old_state = list(old_state)
         self.storage.all().clear()
 
         self.assertNotEqual(self.storage.all().keys(), old_state)
