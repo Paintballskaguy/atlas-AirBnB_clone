@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import unittest
+import unittest, os
 from datetime import datetime
 from uuid import uuid4
 from models.base_model import BaseModel
@@ -12,6 +12,7 @@ class TestBaseModel(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.storage = FileStorage()
+        cls.json_file = "file.json"
 
     @classmethod
     def tearDownClass(cls):
@@ -52,11 +53,16 @@ class TestBaseModel(unittest.TestCase):
         self.assertNotEqual(last_update, new_update)
 
     def test_base_storage_save(self):
-        old_state = self.storage.all().copy
+        with open(self.json_file, 'r') as json_file:
+            old_json = json_file.read()
+
         base_obj = BaseModel()
         base_obj.save()
-        new_state = self.storage.all()
-        self.assertNotEqual(old_state, new_state)
+
+        with open(self.json_file, 'r') as json_file:
+            new_json = json_file.read()
+
+        self.assertNotEqual(old_json, new_json)
 
 if __name__ == '__main__':
     unittest.main()
