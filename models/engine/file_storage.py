@@ -5,31 +5,31 @@ import json
 from models.base_model import BaseModel
 from datetime import datetime
 
-# DO NOT EDIT -- chepe
+
 class FileStorage:
-    ######## private class attributes ########
     __file_path = "file.json"
     __objects = {}
 
-    ######## public instance methods ########
     def all(self):
         """ returns a dictionary of objects """
         return self.__objects
 
     def new(self, obj):
-        """ adds a new object to the dictionary object with the key string <class>.<id> """
+        """ adds a new object to the dictionary object with
+        the key string <class>.<id>
+        """
         key = self.construct_key(obj)
-        self.__objects.update({ key : obj })
+        self.__objects.update( {key: obj} )
 
     def save(self):
         """ serializes objects into a json file """
         decomposed = {}
         for key, obj in self.__objects.items():
             obj_dict = obj.to_dict()
-            decomposed.update({ key: obj_dict })
+            decomposed.update( {key: obj_dict} )
 
         json_string = json.dumps(decomposed)
-        try: 
+        try:
             json_file = open(self.__file_path, "w")
             json_file.write(json_string)
             json_file.close()
@@ -39,7 +39,7 @@ class FileStorage:
     def reload(self):
         """Deserializes objects from a JSON file."""
         try:
-            json_file = open(self.__file_path, 'r') 
+            json_file = open(self.__file_path, 'r')
             json_data = json_file.read()
             json_file.close()
             extracted_data = json.loads(json_data)
@@ -49,7 +49,7 @@ class FileStorage:
                 model_class = globals().get(model_class)
                 if model_class is not None:
                     obj = model_class(**value)
-                    self.__objects.update({ key: obj })
+                    self.__objects.update( {key: obj} )
 
         except FileNotFoundError:
             pass
