@@ -10,9 +10,18 @@ class TestBaseModel(unittest.TestCase):
     """
     contained test
         test_base__init__
+            self.id type str
+            self.created_at type datetime
+            self.updated_at type datetime
+
+            if new instance make sure it is save in storage
         test_base__str__
+            form "[{class}] ({id}) {__dict__}"
         test_base_save
+            check self.updated_at is modified
+            check it is stored in storage.all()
         test_base_to_dict
+            analyze expected return
     """
 
     @classmethod
