@@ -32,16 +32,15 @@ class TestUser(unittest.TestCase):
         user_dict = self.user.to_dict()
         self.assertEqual(user_dict['__class__'], "User")
 
-    def test_user_save(self):
-        old_updated_at = self.user.updated_at
-        self.user.save()
-        self.assertNotEqual(old_updated_at, self.user.updated_at)
+    def test_user_save_reload(self):
+        new_user = User()
+        old_updated_at = new_user.updated_at
+        key = f"User.{new_user.id}"
 
-    def test_user_file_storage_save_reload(self):
-        my_user = User()
-        my_user.save()
-        key = f"User.{my_user.id}"
+        new_user.save()
         self.storage.reload()
+
+        self.assertNotEqual(old_updated_at, new_user.updated_at)
         self.assertIn(key, self.storage.all())
 
     def test_user_in_file_storage(self):
