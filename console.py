@@ -63,8 +63,9 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
 
     def do_all(self, args):
-        'outputs string representations for every existing
-        instance or for all of a class'
+        """ outputs string representations for every existing
+        instance or for all of a class
+        """
         obj_list = []
         if not args:
             for value in models.storage.all().values():
@@ -79,8 +80,9 @@ class HBNBCommand(cmd.Cmd):
         print(obj_list)
 
     def do_update(self, arg):
-        'updates the instance given by class_name and id.
-        usage: update <class> <id> <attr> "<val>"'
+        """ updates the instance given by class_name and id.
+        usage: update <class> <id> <attr> "<val>"
+        """
 
         instance = self.get_instance(arg)
         if instance is None:
