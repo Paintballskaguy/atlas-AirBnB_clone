@@ -24,8 +24,8 @@ class TestFileStorage(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        #if os.path.exists("file.json"):
-        #    os.remove("file.json")
+        if os.path.exists("file.json"):
+            os.remove("file.json")
         cls.storage = FileStorage()
         cls.test_file = "test_file.json"
 
