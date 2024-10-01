@@ -16,7 +16,7 @@ class TestUser(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        self.storage.clear()
+        # self.storage.clear()
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
 
