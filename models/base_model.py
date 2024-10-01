@@ -5,7 +5,8 @@ import models
 from datetime import datetime, time
 from uuid import uuid4
 
-class BaseModel: 
+
+class BaseModel:
 
     def __init__(self, *args, **kwargs):
         if kwargs:
@@ -17,7 +18,7 @@ class BaseModel:
                 self.created_at = datetime.fromisoformat(created_at)
             else:
                 self.created_at = datetime.now()
-        
+
             if type(updated_at) is str:
                 self.updated_at = datetime.fromisoformat(updated_at)
             else:
