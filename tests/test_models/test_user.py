@@ -30,7 +30,7 @@ class TestUser(unittest.TestCase):
         self.user = TestUser.user
 
     def tearDown(self)
-        storages.clear()
+        self.storage.clear()
 
     def test__init__(self):
         """Test that User initializes with the correct attributes"""
