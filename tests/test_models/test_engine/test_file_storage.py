@@ -73,22 +73,5 @@ class TestFileStorage(unittest.TestCase):
         self.storage.reload()
         self.assertEqual(self.storage.all(), old_state)
 
-    """
-    def test_fs_construct_key(self):
-        new = BaseModel()
-        key = self.storage.construct_key(new)
-        self.assertEqual
-
-    def test_reload(self):
-        obj = BaseModel()
-        self.storage.new(obj)
-        self.storage.save()
-        self.storage._FileStorage__objects = {}
-        self.storage.reload()
-        
-        key = f"BaseModel.{obj.id}"
-        self.assertIn(key, self.storage.all())
-    """
-
 if __name__ == '__main__':
     unittest.main()

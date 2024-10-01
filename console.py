@@ -3,7 +3,8 @@
 which imports and customize the cmd.Cmd class
 """
 
-import cmd, models
+import cmd
+import models
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -22,7 +23,7 @@ model_classes = {
         'Review': Review
         }
 
-# DO NOT EDIT -- chepe
+
 class HBNBCommand(cmd.Cmd):
     """ our reimplementation of cmd.Cmd
     """
@@ -62,7 +63,8 @@ class HBNBCommand(cmd.Cmd):
             models.storage.save()
 
     def do_all(self, args):
-        'outputs string representations for every existing instance or for all of a class'
+        'outputs string representations for every existing
+        instance or for all of a class'
         obj_list = []
         if not args:
             for value in models.storage.all().values():
@@ -77,7 +79,8 @@ class HBNBCommand(cmd.Cmd):
         print(obj_list)
 
     def do_update(self, arg):
-        'updates the instance given by class_name and id. usage: update <class> <id> <attr> "<val>"'
+        'updates the instance given by class_name and id.
+        usage: update <class> <id> <attr> "<val>"'
 
         instance = self.get_instance(arg)
         if instance is None:
@@ -104,7 +107,7 @@ class HBNBCommand(cmd.Cmd):
         'exit this CLI instance hbnb'
         quit()
 
-    do_EOF = do_quit 
+    do_EOF = do_quit
 
     def emptyline(self):
         pass
@@ -139,11 +142,12 @@ class HBNBCommand(cmd.Cmd):
             return None
         else:
             key = class_name + "." + id_num
-            instance = models.storage.all().get(key)  
-            if instance is None: 
+            instance = models.storage.all().get(key)
+            if instance is None:
                 print('** no instance found **')
                 return None
             return instance
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
