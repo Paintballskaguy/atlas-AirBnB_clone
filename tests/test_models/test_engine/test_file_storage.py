@@ -68,6 +68,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_fs_reload(self):
         new = BaseModel()
+        new.save()
         old_state = self.storage.all().copy()
         self.storage.all().clear()
         self.assertNotEqual(self.storage.all(), old_state)
