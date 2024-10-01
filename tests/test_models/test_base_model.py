@@ -45,7 +45,7 @@ class TestBaseModel(unittest.TestCase):
         time = datetime.now().isoformat()
         base_id = str(uuid4())
         kwargs = {'id': base_id, 'created_at': time, 'updated_at': time}
-        base_obj = BaseModel(**data)
+        base_obj = BaseModel(**kwargs)
         self.assertEqual(base_obj.id, base_id)
         self.assertEqual(base_obj.created_at.isoformat(), date)
         self.assertEqual(base_obj.updated_at.isoformat(), date)
