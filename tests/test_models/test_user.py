@@ -42,12 +42,7 @@ class TestUser(unittest.TestCase):
 
     def test_user_file_storage_save_reload(self):
         my_user = User()
-        my_user.first_name = "Betty"
-        my_user.last_name = "Bar"
-        my_user.email = "airbnb@mail.com"
-        my_user.password = "root"
         my_user.save()
-
         key = f"User.{my_user.id}"
         self.storage.reload()
         self.assertIn(key, self.storage.all())
