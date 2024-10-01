@@ -46,14 +46,14 @@ class TestBaseModel(unittest.TestCase):
     # in here, test that the data in file is different after the call to save()
     def test_base_model_save(self):
         last_update = self.base.updated_at
-        storage.reload()
-        old_storage = storage.all().items()
+        self.storage.reload()
+        old_storage = self.storage.all().items()
 
         self.base.save()
 
         new_update = self.base.updated_at
-        storage.reload()
-        new_storage = storage.all().items()
+        self.storage.reload()
+        new_storage = self.storage.all().items()
 
         self.assertNotEqual(last_update, new_update)
         self.assertNotEqual(old_storage, new_storage)
