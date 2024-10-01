@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import unittest, contextlib, io, os 
+import unittest
 from datetime import datetime
 from uuid import uuid4
 from models.base_model import BaseModel
@@ -8,22 +8,6 @@ from models.engine.file_storage import FileStorage
 
 
 class TestBaseModel(unittest.TestCase):
-    """
-    contained test
-        test_base__init__
-            self.id type str
-            self.created_at type datetime
-            self.updated_at type datetime
-        test_base__init__kwargs
-            if new instance make sure it is save in storage
-        test_base__str__
-            form "[{class}] ({id}) {__dict__}"
-        test_base_save
-            check self.updated_at is modified
-            check it is stored in storage.all()
-        test_base_to_dict
-            analyze expected return
-    """
 
     @classmethod
     def setUpClass(cls):
