@@ -13,10 +13,10 @@ class TestUser(unittest.TestCase):
     def setUpClass(cls):
         cls.storage = FileStorage()
         cls.test_file = "file.json"
-        cls.user = User()
 
     @classmethod
     def tearDownClass(cls):
+        self.storage.clear()
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
 
@@ -29,7 +29,8 @@ class TestUser(unittest.TestCase):
         self.assertEqual(new_user.last_name, "")
 
     def test_user_to_dict(self):
-        user_dict = self.user.to_dict()
+        new_user = User()
+        user_dict = new_user.to_dict()
         self.assertEqual(user_dict['__class__'], "User")
 
     def test_user_save_reload(self):
@@ -41,16 +42,6 @@ class TestUser(unittest.TestCase):
         self.storage.reload()
         self.assertNotEqual(old_updated_at, new_user.updated_at)
         self.assertIn(key, self.storage.all())
-
-    """
-    def test_user_in_file_storage(self):
-        self.storage.new(self.user)
-        self.storage.save()
-        with open(self.test_file, "r") as f:
-            content = f.read()
-            self.assertIn("User", content)
-            self.assertIn(self.user.email, content)
-    """
 
 if __name__ == '__main__':
     unittest.main()
