@@ -69,7 +69,7 @@ class TestFileStorage(unittest.TestCase):
     def test_fs_reload(self):
         new = BaseModel()
         self.storage.save()
-        old_state = self.storage.all().keys().copy()
+        old_state = self.storage.all().keys()
 
         self.storage.all().clear()
 
