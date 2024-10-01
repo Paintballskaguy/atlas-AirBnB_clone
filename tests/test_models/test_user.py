@@ -1,11 +1,9 @@
 #!/usr/bin/python3
-"""Unit tests for the User class"""
+
 
 import unittest, os
 from models.user import User
 from models.engine.file_storage import FileStorage
-from datetime import datetime
-
 
 class TestUser(unittest.TestCase):
 
@@ -16,7 +14,6 @@ class TestUser(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        # self.storage.clear()
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
 
