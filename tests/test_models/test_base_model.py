@@ -1,36 +1,28 @@
 #!/usr/bin/python3
-"""Unittest module for BaseModel class."""
 
-import io
-import os
-import contextlib
-import unittest
-import models
+import unittest, contextlib, io, os 
 from datetime import datetime
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
 
 class TestBaseModelClass(unittest.TestCase):
-    """Class containing testing functions for BaseModel."""
 
-    storage = FileStorage()
+    @classmethod
+    def setUpClass(cls):
+        cls.storage = FileStorage()
+        cls.base = BaseModel()
 
-    def setUp(self):
-        self.base = BaseModel()
-
-    def tearDown(self):
-        """Set up any state tied to the execution of the test method."""
-        self.storage.__objects.clear()
+    @classmethod
+    def tearDownClass(cls):
+        cls.storage.__objects.clear()
         del self.base
 
     def test_base_id_is_set(self):
-        """Test if id is set on initialization."""
         self.assertIsNotNone(self.base.id)
         self.assertIsInstance(self.base.id, str)
 
     def test_to_dict(self):
-        """Test to_dict method."""
         base_dict = self.base.to_dict()
         self.assertEqual(base_dict['__class__'], 'BaseModel')
         self.assertEqual(base_dict['id'], self.base.id)
@@ -43,7 +35,6 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertIsInstance(updated_at, datetime)
 
     def test_base_model_init(self):
-        """Test BaseModel initialization from a dictionary."""
         date_str = '2022-10-10T10:00:00'
         data = {
             'id': '1234',
@@ -56,7 +47,6 @@ class TestBaseModelClass(unittest.TestCase):
 
     # in here, test that the data in file is different after the call to save()
     def test_base_model_save(self):
-        """Test that BaseModel.save() updates updated_at and stores in storage."""
 
         last_update = self.base.updated_at
         storage.reload()
@@ -73,12 +63,10 @@ class TestBaseModelClass(unittest.TestCase):
         self.assertIn(key, self.storage.all().keys())
 
     def test__str__(self):
-        """Test if __str__ returns the expected string format."""
         expected_str = "[BaseModel] ({}) {}".format(self.base.id, self.base.__dict__)
         self.assertEqual(str(self.base), expected_str)
 
     def test_init_from_kwargs(self):
-        """Test initialization from kwargs."""
         date = "2022-10-10T10:00:00"
         data = {'id': '1234', 'created_at': date, 'updated_at': date}
         base = BaseModel(**data)
