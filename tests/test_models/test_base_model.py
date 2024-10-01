@@ -13,11 +13,6 @@ class TestBaseModelClass(unittest.TestCase):
         cls.storage = FileStorage()
         cls.base = BaseModel()
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.storage.__objects.clear()
-        del self.base
-
     def test_base_id_is_set(self):
         self.assertIsNotNone(self.base.id)
         self.assertIsInstance(self.base.id, str)
