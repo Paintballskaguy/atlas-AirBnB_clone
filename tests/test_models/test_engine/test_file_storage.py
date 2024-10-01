@@ -55,9 +55,16 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(key, self.storage.all().keys())
 
     def test_fs_save(self):
-        self.assertFalse(os.path.exists(self.storage._FileStorage__file_path))
+        with open(self.json_file, 'r') as json_file:
+            old_json = json_file.read()
+
+        new = BaseModel()
         self.storage.save()
-        self.assertTrue(os.path.exists(self.storage._FileStorage__file_path))
+
+        with open(self.json_file, 'r') as json_file:
+            new_json = json_file.read()
+
+        self.assertNotEqual(old_json, new_json)
 
     def test_fs_reload(self):
         self.storage.all().clear()
