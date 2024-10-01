@@ -55,7 +55,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn(key, self.storage.all().keys())
 
     def test_fs_save(self):
-        self.assertNotTrue(os.path.exists(self.storage._FileStorage__file_path))
+        self.assertFalse(os.path.exists(self.storage._FileStorage__file_path))
         self.storage.save()
         self.assertTrue(os.path.exists(self.storage._FileStorage__file_path))
 
