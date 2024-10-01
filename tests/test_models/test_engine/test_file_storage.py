@@ -27,7 +27,7 @@ class TestFileStorage(unittest.TestCase):
         #if os.path.exists("file.json"):
         #    os.remove("file.json")
         cls.storage = FileStorage()
-        cls.storage.clear()
+        cls.storage.all().clear()
         cls.test_file = "test_file.json"
 
     @classmethod
