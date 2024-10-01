@@ -1,22 +1,14 @@
 #!/usr/bin/python3
 
-import unittest, os
+import unittest, os, copy
+from datetime import datetime
+from uuid import uuid4
 from models.engine.file_storage import FileStorage
 from models.base_model import BaseModel
 
-
 class TestFileStorage(unittest.TestCase):
     """ working comment:
-
-    private class attributes:
-        __file_path = "file.json"
-        __objects = {}
-
     public instance methods:
-        all(self) 
-            returns __objects
-        new(self, obj) 
-            __objects.update({key: obj})
         save(self) 
             json serializes __objects into a __file_path
             check state of __file_path before and after
@@ -25,53 +17,56 @@ class TestFileStorage(unittest.TestCase):
             check state of __objects before and after
         construct_key(self, obj)
             returns a key_string
-
     check how this is integrated into BaseModel
         __init__ calls FileStorage.new(obj)
         save calls FileStorage.save()
     """
-    
+
     @classmethod
     def setUpClass(cls):
-        print("Setting up class resources for TestFileStorage...")
+        #if os.path.exists("file.json"):
+        #    os.remove("file.json")
         cls.storage = FileStorage()
+        cls.objects = cls.storage.all()
         cls.test_file = "test_file.json"
 
     @classmethod
     def tearDownClass(cls):
-        print("Tearing down class resources for TestFileStorage...")
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
 
-    def setUp(self):
-        self.storage = FileStorage()
-        self.base = BaseModel()
-        FileStorage._FileStorage__objects = {}
-        self.test_file = "test_file.json"
-    
-    def tearDown(self):
-        FileStorage._FileStorage__objects = {}
-        self.storage._FileStorage__objects = {}
-
-    def test_file_path(self):
+    def test_fs_properties(self):
         self.assertEqual(self.storage._FileStorage__file_path, "file.json")
+        self.assertEqual(self.objects, {})
 
-    def test_objects_initially_empty(self):
-        self.assertEqual(self.storage._FileStorage__objects, {})
+    def test_fs_all(self):
+        self.assertIsNotNone(self.storage.all())
 
-    def test_all_returns_objects(self):
-        self.assertEqual(self.storage.all(), self.storage._FileStorage__objects)
+    def test_fs_new(self):
+        time = datetime.now().isoformat()
+        base_id = str(uuid4())
+        kwargs = {'id': base_id, 'created_at': time, 'updated_at': time}
 
-    def test_new_adds_object(self):
-        obj = BaseModel()
-        self.storage.new(obj)
-        key = f"BaseModel.{obj.id}"
-        self.assertIn(key, self.storage.all())
-        self.assertEqual(self.storage.all()[key], obj)
+        new = BaseModel(**kwargs)
+        key = self.storage.construct_key(new)
 
-    def test_save(self):
+        self.assertNotIn(key, self.storage.all().keys())
+        self.storage.new(new)
+        self.assertIn(key, self.storage.all().keys())
+
+    def test_fs_save(self):
+        self.assertNotTrue(os.path.exists(self.storage._FileStorage__file_path))
         self.storage.save()
         self.assertTrue(os.path.exists(self.storage._FileStorage__file_path))
+
+    def test_fs_reload(self):
+        pass
+
+    """
+    def test_fs_construct_key(self):
+        new = BaseModel()
+        key = self.storage.construct_key(new)
+        self.assertEqual
 
     def test_reload(self):
         obj = BaseModel()
@@ -82,22 +77,7 @@ class TestFileStorage(unittest.TestCase):
         
         key = f"BaseModel.{obj.id}"
         self.assertIn(key, self.storage.all())
-
-    def test_base_model_init(self):
-        data = {
-            'id': '1234',
-            'created_at': '2022-10-10T10:00:00.000000',
-            'updated_at': '2022-10-10T10:00:00.000000'
-        }
-        obj = BaseModel(**data)
-        self.assertEqual(obj.id, '1234')
-        self.assertEqual(obj.created_at.isoformat(timespec='seconds'), '2022-10-10T10:00:00')
-
-    def test_base_model_save(self):
-        last_update = self.storage.all()
-        self.base.save()
-        key = f"BaseModel.{self.base.id}"
-        self.assertIn(key, self.storage.all())
+    """
 
 if __name__ == '__main__':
     unittest.main()

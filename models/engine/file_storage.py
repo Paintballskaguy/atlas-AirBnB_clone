@@ -16,13 +16,11 @@ class FileStorage:
         """ returns a dictionary of objects """
         return self.__objects
 
-    # DO NOT EDIT -- chepe
     def new(self, obj):
         """ adds a new object to the dictionary object with the key string <class>.<id> """
         key = self.construct_key(obj)
         self.__objects.update({ key : obj })
 
-    # DO NOT EDIT -- chepe
     def save(self):
         """ serializes objects into a json file """
         decomposed = {}
@@ -38,8 +36,6 @@ class FileStorage:
         except FileNotFoundError:
             pass
 
-    # DO NOT EDIT -- chepe
-    # using `with` with try is redundant
     def reload(self):
         """Deserializes objects from a JSON file."""
         try:
