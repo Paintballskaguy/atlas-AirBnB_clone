@@ -20,7 +20,7 @@ class TestAmenity(unittest.TestCase):
     """
 
     def test_amenity__init__(self):
-        new_amenity = Amenitiy()
+        new_amenity = Amenity()
         self.assertIsInstance(new_amenity, Amenity)
         self.assertEqual(new_amenity.name, "")
 
