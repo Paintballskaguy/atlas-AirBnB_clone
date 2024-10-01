@@ -27,7 +27,6 @@ class TestFileStorage(unittest.TestCase):
         #if os.path.exists("file.json"):
         #    os.remove("file.json")
         cls.storage = FileStorage()
-        cls.objects = cls.storage.all()
         cls.test_file = "test_file.json"
 
     @classmethod
@@ -37,7 +36,7 @@ class TestFileStorage(unittest.TestCase):
 
     def test_fs_properties(self):
         self.assertEqual(self.storage._FileStorage__file_path, "file.json")
-        self.assertEqual(self.objects, {})
+        self.assertEqual(self.storage.all(), {})
 
     def test_fs_all(self):
         self.assertIsNotNone(self.storage.all())
