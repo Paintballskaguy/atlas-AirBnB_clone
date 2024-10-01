@@ -10,6 +10,8 @@ from datetime import datetime
 class TestUser(unittest.TestCase):
     """Test cases for the User class"""
 
+    storage = FileStorage()
+
     @classmethod
     def setUpClass(cls):
         cls.user = User()
@@ -18,7 +20,6 @@ class TestUser(unittest.TestCase):
         cls.user.last_name = "Doe"
         cls.user.password = "password123"
         cls.test_file = "file.json"
-        cls.storage = FileStorage()
 
     @classmethod
     def tearDownClass(cls):
@@ -27,6 +28,9 @@ class TestUser(unittest.TestCase):
 
     def setUp(self):
         self.user = TestUser.user
+
+    def tearDown(self)
+        storages.clear()
 
     def test__init__(self):
         """Test that User initializes with the correct attributes"""
