@@ -8,6 +8,7 @@ from datetime import datetime
 
 
 class TestUser(unittest.TestCase):
+    """Test cases for the User class"""
 
     @classmethod
     def setUpClass(cls):
@@ -21,7 +22,6 @@ class TestUser(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
-        self.storage.clear()
         if os.path.exists(cls.test_file):
             os.remove(cls.test_file)
 
@@ -29,6 +29,7 @@ class TestUser(unittest.TestCase):
         self.user = TestUser.user
 
     def test__init__(self):
+        """Test that User initializes with the correct attributes"""
         self.assertIsInstance(self.user, User)
 
     def test_to_dict(self):
