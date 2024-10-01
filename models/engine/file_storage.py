@@ -19,14 +19,14 @@ class FileStorage:
         the key string <class>.<id>
         """
         key = self.construct_key(obj)
-        self.__objects.update( {key: obj} )
+        self.__objects.update({key: obj})
 
     def save(self):
         """ serializes objects into a json file """
         decomposed = {}
         for key, obj in self.__objects.items():
             obj_dict = obj.to_dict()
-            decomposed.update( {key: obj_dict} )
+            decomposed.update({key: obj_dict})
 
         json_string = json.dumps(decomposed)
         try:
@@ -49,7 +49,7 @@ class FileStorage:
                 model_class = globals().get(model_class)
                 if model_class is not None:
                     obj = model_class(**value)
-                    self.__objects.update( {key: obj} )
+                    self.__objects.update({key: obj})
 
         except FileNotFoundError:
             pass
