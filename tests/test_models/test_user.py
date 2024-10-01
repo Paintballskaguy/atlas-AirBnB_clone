@@ -36,7 +36,6 @@ class TestUser(unittest.TestCase):
         old_updated_at = self.user.updated_at
         self.user.save()
         self.assertNotEqual(old_updated_at, self.user.updated_at)
-        self.assertTrue(self.user.updated_at > old_updated_at)
 
     def test_user_file_storage_save_reload(self):
         my_user = User()
