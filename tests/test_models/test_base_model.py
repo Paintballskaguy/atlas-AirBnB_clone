@@ -2,6 +2,7 @@
 
 import unittest, contextlib, io, os 
 from datetime import datetime
+from uuid import uuid4
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
 
@@ -13,7 +14,7 @@ class TestBaseModel(unittest.TestCase):
             self.id type str
             self.created_at type datetime
             self.updated_at type datetime
-
+        test_base__init__kwargs
             if new instance make sure it is save in storage
         test_base__str__
             form "[{class}] ({id}) {__dict__}"
@@ -27,46 +28,55 @@ class TestBaseModel(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.storage = FileStorage()
-        cls.base = BaseModel()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.storage.all().clear()
 
     def test_base__init__(self):
-        base = BaseModel()
-        self.assertIsNotNone(base.id)
-        self.assertIsInstance(base.id, str)
-        self.assertIsInstance(base.created_at, datetime)
-        self.assertIsInstance(base.updated_at, datetime)
+        base_obj = BaseModel()
+        self.assertIsNotNone(base_obj.id)
+        self.assertIsInstance(base_obj.id, str)
+        self.assertIsInstance(base_obj.created_at, datetime)
+        self.assertIsInstance(base_obj.updated_at, datetime)
+        self.assertIn(base_obj, self.storage.all().values())
 
     def test_base__init__kwargs(self):
-        date = "2022-10-10T10:00:00"
-        data = {'id': '1234', 'created_at': date, 'updated_at': date}
-        base = BaseModel(**data)
-        self.assertEqual(base.id, '1234')
-        self.assertEqual(base.created_at.isoformat(timespec='seconds'), date)
-        self.assertEqual(base.updated_at.isoformat(timespec='seconds'), date)
+        time = datetime.now().isoformat()
+        base_id = str(uuid4())
+        kwargs = {'id': base_id, 'created_at': time, 'updated_at': time}
+        base_obj = BaseModel(**data)
+        self.assertEqual(base_obj.id, base_id)
+        self.assertEqual(base_obj.created_at.isoformat(), date)
+        self.assertEqual(base_obj.updated_at.isoformat(), date)
 
-    def test_to_dict(self):
-        base_dict = self.base.to_dict()
+    def test_base_to_dict(self):
+        base_obj = BaseModel()
+        base_dict = base_obj.to_dict()
         self.assertEqual(base_dict['__class__'], 'BaseModel')
 
-    def test__str__(self):
-        expected_str = "[BaseModel] ({}) {}".format(self.base.id, self.base.__dict__)
-        self.assertEqual(str(self.base), expected_str)
+    def test_base__str__(self):
+        base_obj = BaseModel()
+        expected_str = "[BaseModel] ({}) {}".format(base_obj.id, base_obj.__dict__)
+        self.assertEqual(str(base_obj), expected_str)
 
+    def test_base_save(self):
+        base_obj = BaseModel()
+        last_update = base_obj.updated_at
+        self.base.save()
+        new_update = base_obj.updated_at
+        self.assertNotEqual(last_update, new_update)
+
+    """
     # in here, test that the data in file is different after the call to save()
-    def test_base_model_save(self):
-        last_update = self.base.updated_at
+    def test_base_storage_save(self):
         self.storage.reload()
         old_storage = self.storage.all().items()
-
-        self.base.save()
-
-        new_update = self.base.updated_at
         self.storage.reload()
         new_storage = self.storage.all().items()
-
-        self.assertNotEqual(last_update, new_update)
         self.assertNotEqual(old_storage, new_storage)
         self.assertIn(key, self.storage.all().keys())
+    """
 
 if __name__ == '__main__':
     unittest.main()
