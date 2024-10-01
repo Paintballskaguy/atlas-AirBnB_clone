@@ -67,13 +67,11 @@ class TestFileStorage(unittest.TestCase):
         self.assertNotEqual(old_json, new_json)
 
     def test_fs_reload(self):
-        self.storage.all().clear()
         old_state = self.storage.all().copy()
-        new = BaseModel()
-        new.save()
+        self.storage.all().clear()
+        self.assertNotEqual(self.storage.all(), old_state)
         self.storage.reload()
-        new_state = self.storage.all()
-        self.assertNotEqual(new_state, old_state)
+        self.assertEqual(self.storage.all(), old_state)
 
     """
     def test_fs_construct_key(self):
