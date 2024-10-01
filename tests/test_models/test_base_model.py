@@ -63,7 +63,7 @@ class TestBaseModel(unittest.TestCase):
     def test_base_save(self):
         base_obj = BaseModel()
         last_update = base_obj.updated_at
-        self.base.save()
+        base_obj.save()
         new_update = base_obj.updated_at
         self.assertNotEqual(last_update, new_update)
 
