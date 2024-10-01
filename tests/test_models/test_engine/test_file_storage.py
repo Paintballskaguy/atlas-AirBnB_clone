@@ -72,11 +72,16 @@ class TestFileStorage(unittest.TestCase):
 
         old_state = self.storage.all().keys()
         old_state = list(old_state)
-        self.storage.all().clear()
 
-        self.assertNotEqual(self.storage.all().keys(), old_state)
+        self.storage.all().clear()
+        clear_state = self.storage.all().keys()
+        clear_state = list(clear_state)
+
+        self.assertNotEqual(clear_state, old_state)
         self.storage.reload()
-        self.assertEqual(self.storage.all().keys(), old_state)
+        new_state = self.storage.all().keys()
+        new_state = list(new_state)
+        self.assertEqual(new_state, old_state)
 
 if __name__ == '__main__':
     unittest.main()
