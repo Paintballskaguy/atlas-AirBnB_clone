@@ -11,13 +11,9 @@ class TestUser(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.user = User()
-        cls.user.email = "test@mail.com"
-        cls.user.first_name = "John"
-        cls.user.last_name = "Doe"
-        cls.user.password = "password123"
-        cls.test_file = "file.json"
         cls.storage = FileStorage()
+        cls.test_file = "file.json"
+        cls.user = User()
 
     @classmethod
     def tearDownClass(cls):
