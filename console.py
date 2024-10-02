@@ -67,12 +67,15 @@ class HBNBCommand(cmd.Cmd):
         instance or for all of a class
         """
         obj_list = []
+        if args:
+            class_given = args.split()
+            class_given = class_given[0]
         if not args:
             for value in models.storage.all().values():
                 obj_list.append(str(value))
-        elif args in model_classes.keys():
+        elif class_given in model_classes.keys():
             for key, value in models.storage.all().items():
-                if key.startswith(args):
+                if key.startswith(class_given):
                     obj_list.append(str(value))
         else:
             print("** class doesn't exist **")
