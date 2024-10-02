@@ -102,10 +102,12 @@ class HBNBCommand(cmd.Cmd):
 
         if hasattr(instance, attr):
             attr_type = type(getattr(instance, attr))
-            if attr_type is int:
-                value = int(value)
-            elif attr_type is float:
-                value = float(value)
+
+            try:
+                value = attr_type(value)
+            except (ValueError, TypeError):
+                print("** value given could not be typecast correctly **")
+                value = getattr(instance, attr)
 
             setattr(instance, attr, value)
             instance.save()
