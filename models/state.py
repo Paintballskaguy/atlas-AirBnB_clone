@@ -13,4 +13,10 @@ class State(BaseModel):
     Public class attributes:
         name: string - empty string
     """
-    name = ""
+    def __init__(self, *args, **kwargs):
+        if kwargs:
+            super().__init__(*args, **kwargs)
+            self.name = kwargs.get('name')
+        else:
+            super().__init__()
+            self.name = ""
