@@ -107,12 +107,10 @@ class HBNBCommand(cmd.Cmd):
             elif attr_type is float:
                 value = float(value)
 
-        setattr(instance, attr, value)
-        instance.save()
-        """
+            setattr(instance, attr, value)
+            instance.save()
         else:
             print("** no such attribute found **")
-        """
 
     def do_quit(self, arg):
         'exit this CLI instance hbnb'
