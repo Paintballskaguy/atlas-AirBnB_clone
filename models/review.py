@@ -17,9 +17,6 @@ class Review(BaseModel):
     def __init__(self, *args, **kwargs):
         if kwargs:
             super().__init__(*args, **kwargs)
-            self.place_id = kwargs.get('place_id')
-            self.user_id = kwargs.get('user_id')
-            self.text = kwargs.get('text')
         else:
             super().__init__()
             self.place_id = ""

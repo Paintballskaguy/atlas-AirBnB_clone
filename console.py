@@ -109,6 +109,10 @@ class HBNBCommand(cmd.Cmd):
 
         setattr(instance, attr, value)
         instance.save()
+        """
+        else:
+            print("** no such attribute found **")
+        """
 
     def do_quit(self, arg):
         'exit this CLI instance hbnb'
@@ -121,9 +125,19 @@ class HBNBCommand(cmd.Cmd):
 
     def parse_attributes(self, args):
         'returns an touple with attribute and value'
-        args = args.split()
-        attr = args[2] if len(args) > 2 else None
-        value = args[3] if len(args) > 3 else None
+
+        attr = args.split()
+        attr = attr[2] if len(attr) > 2 else None
+        if args.find('"') > 0:
+            value = args.split('"')
+            value = value[1] if len(value) > 1 else None
+        elif args.find("'") > 0:
+            value = args.split("'")
+            value = value[1] if len(value) > 1 else None
+        else:
+            value = args.split()
+            value = value[3] if len(value) > 3 else None
+
         if attr is None:
             print('** attribute name missing **')
             return None

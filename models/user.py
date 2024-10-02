@@ -12,10 +12,6 @@ class User(basemodel.BaseModel):
     def __init__(self, *args, **kwargs):
         if kwargs:
             super().__init__(*args, **kwargs)
-            self.email = kwargs.get('email')
-            self.password = kwargs.get('password')
-            self.first_name = kwargs.get('first_name')
-            self.last_name = kwargs.get('last_name')
         else:
             super().__init__()
             self.email = ""

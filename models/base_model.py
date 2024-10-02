@@ -23,6 +23,10 @@ class BaseModel:
                 self.updated_at = datetime.fromisoformat(updated_at)
             else:
                 self.updated_at = datetime.now()
+
+            for key, value in kwargs.items():
+                if key not in ['__class__', 'id', 'created_at', 'updated_at']:
+                    setattr(self, key, value)
         else:
             self.id = str(uuid4())
             self.created_at = datetime.now()
