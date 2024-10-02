@@ -53,7 +53,6 @@ class FileStorage:
             for key, value in extracted_data.items():
                 model_class = value['__class__']
                 model_class = globals().get(model_class)
-                print(model_class)
                 if model_class is not None:
                     obj = model_class(**value)
                     self.__objects.update({key: obj})
