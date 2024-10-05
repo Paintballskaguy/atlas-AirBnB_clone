@@ -1,10 +1,13 @@
 
 footer {
-	background-color: #00ff00;
+	background-color: white;
 	position: absolute;
 	bottom: 0;
 	height: 60px;
 	width: 100%;
 	text-align: center;
 	line-height: 60px;
+	/* border top 1px #CCCCCC */
+	/* center text v/h */
+	/* always at the bottom of the page */
 }
