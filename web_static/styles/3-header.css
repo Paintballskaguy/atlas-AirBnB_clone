@@ -1,8 +1,15 @@
-
 header {
 	background-color: white;
-	height: 70px;
+	height: 70;
 	width: 100%;
-	/* bottom border : 1px #CCCCCC; */
-	/* logo: align left, center vertically (20px space on the left)*/
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.hb-logo {
+	position: relative;
+	left: 10px;
+	/* center vertically 
+	top: 50%;
+	transform: translate(0%, -50%);
+	*/
 }
