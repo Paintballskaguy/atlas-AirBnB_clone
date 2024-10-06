@@ -13,12 +13,6 @@ body {
 	 * */
 }
 
-.lorem-ipsum {
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-
 .container {
 	position: relative;
 	max-width: 1000px;
@@ -27,4 +21,10 @@ body {
 	margin-left: auto;
 	margin-right: auto;
 	
+}
+
+.lorem-ipsum {
+	position: relative;
+	width: 100%;
+	height: 100%;
 }
