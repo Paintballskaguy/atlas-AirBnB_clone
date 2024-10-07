@@ -1,6 +1,7 @@
 @import "3-header.css";
 @import "3-footer.css";
-@import "5-filters.css";
+@import "6-filters.css";
+@import "8-places.css";
 
 body {
 	margin: 0;
