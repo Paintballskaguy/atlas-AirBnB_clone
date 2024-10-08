@@ -1,5 +1,4 @@
 .places {
-	align: left;
 	font-size: 30px;
 	display: flex;
 	justify-content: center;
@@ -12,8 +11,7 @@
 
 .places article {
 	display: grid;
-	grid-template-columns: 1fr 60px;
-	grid-template-rows: 1;
+	grid-template-columns: 1fr auto;
 	align-items: baseline;
 	width: 390px;
 	padding: 20px;
@@ -36,6 +34,8 @@
 	height: 60px;
 	width: auto;
 	min-width: 60px;
+	padding-left: 5px;
+	padding-right: 5px;
 
 	color: #FF5A5F;
 	font-size: 30px;
